@@ -1,0 +1,84 @@
+@font-face {
+  font-family: card;
+  src: url(cards.ttf);
+}
+.red {
+  color: #d71e00;
+}
+.black {
+  color: #000;
+}
+.cards-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+.play-card {
+  display: inline-flex;
+  width: 40px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 4px;
+  flex-direction: column;
+	justify-content: center;
+  margin: 5px;
+}
+
+.cardIndentifier {
+  font-family: sans-serif;
+  font-size: 12px;
+  /* padding-left: 2px; */
+}
+.icon-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  top: 1px;
+}
+.right-identifier {
+  transform: rotate(180deg);
+  margin-top: 3px;
+}
+.cards-row-small {
+  display: inline-block;
+}
+.Unicode-icon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+.identifier-text {
+  font-size: 20px;
+}
+
+/* box shadiow*/
+
+.backdrop {
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
+  -ms-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  -o-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.flag {
+  display: block;
+  margin: 10px auto;
+}
+.menu-item .flag {
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.flag img {
+  width: 24px;
+  height: auto;
+}
+.inline {
+  display: inline-block;
+}
+Collap
