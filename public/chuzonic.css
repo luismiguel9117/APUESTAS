@@ -278,129 +278,53 @@ body.solo-calculadora .calculator__tabs {
 
 /* ==========================================================================
    MESA / CALCULADORA
+   --------------------------------------------------------------------------
+   El clon de pokerlistings YA tiene el layout correcto en styles.css:
+     - .calculator__table-body es la mesa ovalada y su <picture> pinta la
+       elipse verde con el SVG (poker-table.svg / poker-table-desktop.svg).
+     - .calculator__players es una GRID 6x3 superpuesta sobre la mesa
+       (z-index:10, pointer-events:none, transform:scale(0.8)):
+         item 1 -> grid-area 3/2  (Player 1, abajo izquierda)
+         item 2 -> grid-area 3/4  (Player 2, abajo derecha)
+         items 3-7 -> "Add Player" repartidos en el anillo
+     - .calculator__board va absoluto en el centro (top:52%, translate(-50%,-50%))
+     - .calculator__player-chances apila Win y Tie en columna
+
+   Por eso aqui NO se reimplementa el layout: se respetan las reglas del clon
+   y solo se colorea. Lo que si se neutraliza son los overrides anteriores
+   que habian roto la grid (forzar 2 columnas, ocultar los Add Player,
+   resetear el board a relativo, ocultar el <picture>).
    ========================================================================== */
 body.solo-calculadora .calculator {
   margin-top: 26px;
   margin-bottom: 26px;
 }
 
-/* Fondo de la mesa: verde con marco de neon rojo */
-body.solo-calculadora .calculator__table {
-  position: relative;
-  border-radius: 999px;
-  padding: 10px;
-  background: linear-gradient(160deg, #1a1a1e 0%, #0a0a0e 60%) !important;
-  border: 2px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 0 28px rgba(241, 13, 30, 0.5),
-    0 0 70px rgba(241, 13, 30, 0.28),
-    inset 0 0 30px rgba(0, 0, 0, 0.85);
-  /* Limitar al ancho del contenedor (el clon lo hace full-bleed con
-     margin-inline: calc(50% - 50vw)); aqui se mantiene centrado. */
-  max-width: 1000px;
-  margin-inline: auto !important;
+/* La mesa: el SVG original pinta la elipse. Solo se le anade el halo neon. */
+body.solo-calculadora .calculator__table-body img {
+  filter: drop-shadow(0 0 18px rgba(241, 13, 30, 0.45))
+          drop-shadow(0 0 46px rgba(241, 13, 30, 0.22));
 }
 
-/* Luces de neón superior e inferior del marco */
-body.solo-calculadora .calculator__table::before,
-body.solo-calculadora .calculator__table::after {
-  content: '';
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  height: 3px;
-  border-radius: 3px;
-  background: var(--cz-red);
-  box-shadow: 0 0 10px var(--cz-red), 0 0 24px var(--cz-red-glow);
-  pointer-events: none;
-}
-
-body.solo-calculadora .calculator__table::before {
-  top: -1px;
-}
-
-body.solo-calculadora .calculator__table::after {
-  bottom: -1px;
-}
-
-/* El felt verde */
+/* Tinte verde Chuzonic sobre el felt + viñeta interior. */
 body.solo-calculadora .calculator__table-body {
-  position: relative;
-  border-radius: 999px;
-  overflow: hidden;
   background:
-    radial-gradient(120% 90% at 50% 40%, rgba(255, 255, 255, 0.07) 0%, transparent 60%),
-    linear-gradient(180deg, var(--cz-felt) 0%, var(--cz-felt-dark) 100%) !important;
-  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.55);
-  /* Proporcion de la mesa real (mas compacta que la del clon) */
-  aspect-ratio: 360 / 150;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* El <img> es solo la forma de la mesa: se oculta y deja el fondo CSS */
-body.solo-calculadora .calculator__table-body > picture {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-body.solo-calculadora .calculator__table-body > picture img {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  opacity: 0;
-}
-
-/* El board del clon viene posicionado en absoluto (left:50%, translate(-50%,-50%)).
-   Al pasarlo a relativo esos offsets lo desplazan, asi que se resetean. */
-body.solo-calculadora .calculator__board {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  width: auto;
-  z-index: 2;
-  gap: 30px;
-}
-
-/* El .calculator__player del clon trae su propio fondo, borde y padding
-   (tarjeta dentro de la tarjeta). En el mockup el panel es una sola pieza,
-   asi que se neutralizan y el contenido fluye dentro del panel. */
-body.solo-calculadora .calculator__player {
-  width: 100% !important;
-  max-width: none !important;
-  padding: 0 !important;
-  gap: 14px !important;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-body.solo-calculadora .calculator__player::before,
-body.solo-calculadora .calculator__player::after {
-  display: none !important;
+    radial-gradient(120% 90% at 50% 40%, rgba(255, 255, 255, 0.06) 0%, transparent 62%),
+    linear-gradient(180deg, rgba(0, 107, 43, 0.92) 0%, rgba(0, 77, 32, 0.94) 100%) !important;
 }
 
 /* Etiquetas Flop / Turn / River */
 body.solo-calculadora .calculator__board-group-name {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-weight: 600 !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-/* Slots de carta sobre el felt */
+/* Slots de carta sobre el felt: cuadrado, verde oscuro translucido */
 body.solo-calculadora .calculator__card-slot {
-  background: rgba(0, 0, 0, 0.28) !important;
+  background: rgba(0, 60, 30, 0.45) !important;
   border-color: rgba(255, 255, 255, 0.55) !important;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
 }
 
 body.solo-calculadora .calculator__card-slot::before {
@@ -410,81 +334,60 @@ body.solo-calculadora .calculator__card-slot::before {
 /* El "+" de los slots en verde neon */
 body.solo-calculadora .calculator__card-slot::after {
   filter: drop-shadow(0 0 6px rgba(120, 255, 180, 0.55));
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 /* ==========================================================================
    PANELES DE JUGADORES
    --------------------------------------------------------------------------
-   El clon usa una grid de 6 columnas con 7 items (5 jugadores + 2 "Add
-   Player"). Para el diseno Chuzonic solo se muestran 2 jugadores y un
-   unico boton "Add Player" al pie, asi que se fuerzan 2 columnas y se
-   ocultan los items sobrantes (3-6) que el JS conserva en el DOM.
+   La grid 6x3 del clon reparte los items: 1 y 2 son los jugadores (abajo de
+   la mesa) y 3-7 son los "Add Player" del anillo. NO se toca esa grid: solo
+   se colorea el panel.
    ========================================================================== */
-body.solo-calculadora .calculator__players {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  grid-template-rows: none !important;
-  gap: 22px !important;
-  margin-top: 26px !important;
-  max-width: 1000px;
-  margin-inline: auto !important;
-  /* El clon aplica transform: scale(0.8) + pointer-events:none en escritorio:
-     hay que neutralizarlo para que el layout y los clicks funcionen. */
-  transform: none !important;
-  pointer-events: auto !important;
-  width: 100% !important;
+body.solo-calculadora .calculator__players-item {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  overflow: visible;
 }
 
-body.solo-calculadora .calculator__players-item {
+/* El .calculator__player del clon es la tarjeta (fondo + borde + padding). */
+body.solo-calculadora .calculator__player {
   position: relative;
-  grid-column: auto !important;
-  pointer-events: auto !important;
-  min-width: 0 !important;
-  height: auto !important;
-  background: linear-gradient(165deg, var(--cz-panel-2) 0%, var(--cz-panel) 100%) !important;
+  background: linear-gradient(165deg, rgba(12, 14, 22, 0.94) 0%, rgba(7, 8, 14, 0.96) 100%) !important;
   border: 1px solid var(--cz-line) !important;
-  border-radius: 14px !important;
-  padding: 18px 20px 16px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.55) !important;
+  padding: 16px 18px !important;
+  gap: 10px !important;
   overflow: hidden;
 }
 
-/* Ocultar los slots "Add Player" intermedios (jugadores 3-6) que el clon
-   renderiza dentro de la grid. El JS sigue gestionandolos por si el
-   usuario agrega mas jugadores. */
-body.solo-calculadora .calculator__players-item:not(.is-added) {
-  display: none !important;
-}
-
-/* El boton "Add Player" final (data-player-id="7") ocupa toda la fila */
-body.solo-calculadora .calculator__players-item[data-player-id='7'] {
-  grid-column: 1 / -1 !important;
-}
-
-/* El "Add Player" dentro de la zona de controles tambien se muestra como
-   boton principal cuando es el unico disponible. */
-body.solo-calculadora .calculator__controls .calculator__player-add {
-  display: none !important;
-}
-
-/* Filete rojo vertical a la izquierda */
-body.solo-calculadora .calculator__players-item::before {
-  content: '';
+/* Filete rojo vertical a la izquierda del panel. */
+body.solo-calculadora .calculator__player::before {
+  content: '' !important;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, var(--cz-red) 0%, rgba(241, 13, 30, 0.1) 85%);
+  background: linear-gradient(180deg, var(--cz-red) 0%, rgba(241, 13, 30, 0.08) 88%);
   box-shadow: 0 0 14px var(--cz-red-glow);
+  z-index: 2;
+}
+
+/* El ::after del clon es un overlay de gradiente: se desactiva para no tapar. */
+body.solo-calculadora .calculator__player::after {
+  background-image: none !important;
 }
 
 body.solo-calculadora .calculator__player-name {
   color: var(--cz-text) !important;
-  font-size: 20px !important;
+  font-size: 19px !important;
   font-weight: 700 !important;
-  margin-bottom: 12px !important;
-  padding-bottom: 10px !important;
+  margin-bottom: 4px !important;
+  padding-bottom: 9px !important;
   position: relative;
   width: 100% !important;
   text-align: left !important;
@@ -504,109 +407,64 @@ body.solo-calculadora .calculator__player-name::after {
 }
 
 body.solo-calculadora .calculator__player-cards {
-  justify-content: center;
-  gap: 14px;
-  margin: 14px 0 12px;
-}
-
-/* Slots de carta en los paneles */
-body.solo-calculadora .calculator__player .calculator__card-slot {
-  width: 58px !important;
-  max-width: 58px;
-  height: 84px;
-  max-height: 84px;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-}
-
-body.solo-calculadora .calculator__player .calculator__card-slot::after {
-  opacity: 0.75;
-}
-
-/* Porcentajes Win / Tie (en linea, como en el mockup).
-   El clon los pone en columna (flex-direction: column) con `width:100%` en
-   cada item; hay que forzar fila y ancho automatico. */
-body.solo-calculadora .calculator__player-chances {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: baseline !important;
   justify-content: center !important;
-  gap: 24px !important;
-  width: 100% !important;
+  gap: 12px !important;
+  margin: 8px 0 6px !important;
+}
+
+/* Win / Tie apilados verticalmente (el clon ya los pone en columna). */
+body.solo-calculadora .calculator__player-chances {
+  align-items: center !important;
+  gap: 2px !important;
 }
 
 body.solo-calculadora .calculator__player-chances-item {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: baseline !important;
-  justify-content: flex-start !important;
-  gap: 6px !important;
-  width: auto !important;
-  max-width: none !important;
-  text-align: left !important;
+  gap: 5px !important;
 }
 
 body.solo-calculadora .calculator__player-chances-item-value {
   color: var(--cz-text) !important;
-  font-size: 22px !important;
+  font-size: 19px !important;
   font-weight: 700 !important;
-  order: 2;
 }
 
 body.solo-calculadora .calculator__player-chances-item-name {
   color: var(--cz-text-dim) !important;
   font-size: 13px !important;
-  order: 1;
 }
 
 /* ==========================================================================
    BOTON ADD PLAYER
    --------------------------------------------------------------------------
-   En el mockup es una barra ancha con borde rojo neon, centrada, con el
-   icono "+" a la izquierda del texto.
+   El clon ya los reparte por el anillo con la grid 6x3 (items 3-7). Solo se
+   colorea: pastilla oscura con borde claro y el "+" en rojo neon.
    ========================================================================== */
-body.solo-calculadora .calculator__players-item[data-player-id='7'] {
-  grid-column: 1 / -1 !important;
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  overflow: visible;
-}
-
-body.solo-calculadora .calculator__players-item[data-player-id='7']::before {
-  display: none;
-}
-
 body.solo-calculadora .calculator__player-add {
-  grid-column: 1 / -1;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 18px;
-  background: rgba(241, 13, 30, 0.07) !important;
-  border: 1px solid rgba(241, 13, 30, 0.55) !important;
-  border-radius: 12px !important;
+  gap: 10px;
+  height: 56px !important;
+  padding: 12px 22px !important;
+  border-radius: 999px !important;
+  background: radial-gradient(58.47% 148.33% at 50% -47.5%, rgba(20, 20, 20, 0) 0px, rgba(20, 20, 20, 0.55) 82.99%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   color: var(--cz-text) !important;
-  font-size: 18px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 body.solo-calculadora .calculator__player-add:hover {
-  background: rgba(241, 13, 30, 0.14) !important;
   border-color: var(--cz-red) !important;
-  box-shadow: 0 0 24px rgba(241, 13, 30, 0.35);
+  box-shadow: 0 0 18px rgba(241, 13, 30, 0.4) !important;
 }
 
-/* Icono + rojo del boton (a la izquierda, como en el mockup) */
+/* Icono + rojo del boton */
 body.solo-calculadora .calculator__player-add::after {
-  order: -1;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
-  filter: drop-shadow(0 0 6px var(--cz-red-glow));
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
+  filter: drop-shadow(0 0 5px var(--cz-red-glow));
 }
 
 /* ==========================================================================
@@ -753,11 +611,6 @@ body.solo-calculadora .calculator__modal-reset.button {
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1024px) {
-  body.solo-calculadora .calculator__players {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
   .cz-header {
     flex-wrap: wrap;
     gap: 12px;
@@ -793,13 +646,5 @@ body.solo-calculadora .calculator__modal-reset.button {
     max-width: 48px;
     height: 70px;
     max-height: 70px;
-  }
-
-  body.solo-calculadora .calculator__table {
-    border-radius: 40px;
-  }
-
-  body.solo-calculadora .calculator__table-body {
-    border-radius: 32px;
   }
 }
