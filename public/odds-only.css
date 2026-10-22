@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Modo "solo calculador" (Odds Calculator)
+   --------------------------------------------------------------------------
+   Oculta el header (hero) y el footer del clon de PokerListings, dejando
+   visible unicamente el widget del Texas Hold'em Poker Odds Calculator.
+
+   IMPORTANTE: el header NO se elimina del HTML, solo se oculta por CSS.
+   Motivo: el bundle `scripts.min.js` del sitio original aborta su ejecucion
+   si no encuentra `.header__burger-button` (lanza
+   "Cannot read properties of null (reading 'addEventListener')"), y esa
+   abortacion impide que `Qi.init()` se ejecute -> el calculador deja de
+   funcionar. Manteniendo el elemento en el DOM (con display:none) el JS
+   encuentra el nodo y todo sigue operativo.
+
+   Para volver a mostrar header y footer, basta con borrar/comentar este bloque.
+   ========================================================================== */
+
+body.solo-calculadora .header,
+body.solo-calculadora .footer {
+  display: none !important;
+}
+
+/* El header es position:fixed; sin el, el margen que lo compensaba dejaria
+   un hueco superior. Se neutraliza. */
+body.solo-calculadora main {
+  margin-top: 0 !important;
+}
+
+/* Sin footer, el padding inferior sobra. */
+body.solo-calculadora .site-main {
+  padding-bottom: 24px !important;
+}
+
+/* Encabezado propio del modo calculadora. */
+.odds-only-header {
+  display: block;
+  width: 100%;
+  padding: 18px 0;
+  background: var(--background-surface, #0d1117);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 28px;
+}
+
+.odds-only-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.odds-only-header__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main, #fff);
+  line-height: 1.2;
+}
+
+.odds-only-header__subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--text-secondary, #9aa4b2);
+}
+
+.odds-only-header__badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #04140c;
+  background: linear-gradient(135deg, #35d07f, #21c26b);
+}
