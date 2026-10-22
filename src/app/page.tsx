@@ -1,53 +1,30 @@
 import React from 'react';
-import {
-  HeaderSection,
-  HeroMainScreen,
-  VipBannerSection,
-  HotNewsSection,
-  LatestMaterialsSection,
-  InstagramSection,
-  PokerEducationSection,
-  QuickToolsBannersSection,
-  QuizSection,
-  SupportBannerSection,
-  CasinoGameTypesSection,
-  PopularSlotsSection,
-  CasinoEducationSection,
-  YouTubeShortsSection,
-  AboutSection,
-  NewsletterSection,
-  PokerSoftwareSection,
-  FooterSection,
-} from '@/components/PokerListingsSections';
-import { InteractiveController } from '@/components/InteractiveController';
+import Script from 'next/script';
+import { ODDS_CALCULATOR_HTML } from '@/components/OddsCalculatorSection';
 
+/**
+ * RAÍZ DEL SITIO — por ahora muestra SOLO el Odds Calculator.
+ *
+ * El HTML del widget viene del scrap de pokerlistings.com (Texas Hold'em,
+ * Omaha, Omaha H/L, 7-Stud, 7-Stud H/L y Razz) y el motor de cálculo en
+ * `public/assets/odds-calc/js/scripts.min.js`.
+ *
+ * El resto del clon de PokerListings NO se elimina: sigue en
+ * `src/components/PokerListingsSections.tsx` y en la ruta `/home`.
+ * Para volver a mostrarlo basta con restaurar los <*Section /> aquí.
+ */
 export default function HomePage() {
   return (
     <div id="page" className="site">
-      <InteractiveController />
-      <HeaderSection />
-      <div className="container" />
       <main id="primary" className="site-main container main-content">
-        <article className="page-main-content post-22286 page type-page status-publish has-post-thumbnail hentry">
-          <HeroMainScreen />
-          <VipBannerSection />
-          <HotNewsSection />
-          <LatestMaterialsSection />
-          <InstagramSection />
-          <PokerEducationSection />
-          <QuickToolsBannersSection />
-          <QuizSection />
-          <SupportBannerSection />
-          <CasinoGameTypesSection />
-          <PopularSlotsSection />
-          <CasinoEducationSection />
-          <YouTubeShortsSection />
-          <AboutSection />
-          <NewsletterSection />
-          <PokerSoftwareSection />
+        <article className="page-main-content post-2310 page type-page status-publish hentry">
+          <div
+            className="calculator-content-wrapper"
+            dangerouslySetInnerHTML={{ __html: ODDS_CALCULATOR_HTML }}
+          />
         </article>
       </main>
-      <FooterSection />
+      <Script src="/assets/odds-calc/js/scripts.min.js" strategy="afterInteractive" />
     </div>
   );
 }
