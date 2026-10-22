@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Genera .next/standalone para la imagen Docker (runner minimo).
+  output: 'standalone',
   images: {
     unoptimized: true,
   },
