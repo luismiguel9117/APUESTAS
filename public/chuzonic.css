@@ -1,0 +1,804 @@
+/* ==========================================================================
+   TEMA CHUZONIC PLAY — Odds Calculator
+   --------------------------------------------------------------------------
+   Rediseño completo del clon de PokerListings con la identidad visual de
+   Chuzonic Play: fondo negro/rojo con líneas de neón, mesa verde con marco
+   de neón rojo, paneles de jugadores con borde rojo y header con logo.
+
+   Paleta extraída del mockup de referencia:
+     --cz-red:        #F10D1E  (rojo neón principal)
+     --cz-red-glow:   rgba(241,13,30,.55)
+     --cz-felt:       #006B2B  (verde de la mesa)
+     --cz-bg:         #05060B  (negro de fondo)
+     --cz-panel:      #07080E  (fondo de paneles)
+     --cz-text:       #F9F7FA
+     --cz-text-dim:   #9AA0AC
+   ========================================================================== */
+
+:root {
+  --cz-red: #f10d1e;
+  --cz-red-bright: #ff2b3d;
+  --cz-red-glow: rgba(241, 13, 30, 0.55);
+  --cz-red-soft: rgba(241, 13, 30, 0.16);
+  --cz-felt: #006b2b;
+  --cz-felt-dark: #004d20;
+  --cz-bg: #05060b;
+  --cz-panel: #07080e;
+  --cz-panel-2: #0c0e16;
+  --cz-line: rgba(255, 255, 255, 0.09);
+  --cz-text: #f9f7fa;
+  --cz-text-dim: #9aa0ac;
+  --cz-silver: #c9ced8;
+}
+
+/* ---------- Base ---------- */
+body.solo-calculadora {
+  background-color: var(--cz-bg) !important;
+  background-image:
+    linear-gradient(rgba(5, 6, 11, 0.55), rgba(5, 6, 11, 0.78)),
+    url('/assets/chuzonic/bg-chuzonic.webp');
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  color: var(--cz-text) !important;
+  min-height: 100vh;
+}
+
+body.solo-calculadora .site,
+body.solo-calculadora .site-main {
+  background: transparent !important;
+}
+
+body.solo-calculadora .container {
+  max-width: 1240px;
+}
+
+/* ---------- Ocultar header y footer originales del clon ---------- */
+body.solo-calculadora .header,
+body.solo-calculadora .footer {
+  display: none !important;
+}
+
+body.solo-calculadora main {
+  margin-top: 0 !important;
+}
+
+body.solo-calculadora .site-main {
+  padding-bottom: 40px !important;
+}
+
+/* ==========================================================================
+   HEADER CHUZONIC
+   ========================================================================== */
+.cz-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 20px;
+  background: linear-gradient(180deg, rgba(4, 5, 10, 0.96) 0%, rgba(4, 5, 10, 0.82) 100%);
+  border-bottom: 1px solid var(--cz-red-soft);
+  backdrop-filter: blur(10px);
+}
+
+.cz-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cz-red), transparent);
+  opacity: 0.55;
+}
+
+.cz-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.cz-logo__emblem {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--cz-red-glow));
+}
+
+.cz-logo__wordmark {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- Navegacion de juegos ---------- */
+.cz-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cz-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.cz-nav__item {
+  position: relative;
+  padding: 16px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cz-text);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.cz-nav__item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cz-nav__item.is-active {
+  color: var(--cz-red-bright);
+}
+
+/* Subrayado neon del item activo */
+.cz-nav__item.is-active::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--cz-red);
+  box-shadow: 0 0 12px var(--cz-red), 0 0 22px var(--cz-red-glow);
+}
+
+.cz-nav__item--more .cz-caret {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 12px;
+  transform: translateY(-1px);
+}
+
+/* ---------- Botones de la derecha ---------- */
+.cz-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cz-icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cz-line);
+  border-radius: 10px;
+  color: var(--cz-text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.cz-icon-btn:hover {
+  border-color: var(--cz-red);
+  box-shadow: 0 0 14px rgba(241, 13, 30, 0.35);
+  background: rgba(241, 13, 30, 0.08);
+}
+
+.cz-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Ocultar las pestañas originales del clon: el nav de Chuzonic las reemplaza.
+   Se ocultan por CSS (no se eliminan) para no romper el JS del sitio. */
+body.solo-calculadora .calculator__tabs {
+  display: none !important;
+}
+
+/* ==========================================================================
+   DESPLEGABLE "MAS"
+   ========================================================================== */
+.cz-more-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  background: linear-gradient(165deg, var(--cz-panel-2) 0%, var(--cz-panel) 100%);
+  border: 1px solid rgba(241, 13, 30, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.7), 0 0 24px rgba(241, 13, 30, 0.22);
+  z-index: 300;
+}
+
+.cz-more-menu[hidden] {
+  display: none !important;
+}
+
+.cz-more-menu__item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--cz-text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cz-more-menu__item:hover {
+  background: rgba(241, 13, 30, 0.14);
+  color: #fff;
+}
+
+.cz-more-menu__item.is-active {
+  color: var(--cz-red-bright);
+  background: rgba(241, 13, 30, 0.1);
+}
+
+/* El nav puede hacer scroll horizontal en movil, pero eso recorta el
+   desplegable "Mas". Se permite el overflow vertical y se ancla el menu
+   al boton "Mas" (no al nav, que es el elemento que hace scroll). */
+.cz-nav {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.cz-nav__item--more {
+  position: relative;
+}
+
+/* ==========================================================================
+   MESA / CALCULADORA
+   ========================================================================== */
+body.solo-calculadora .calculator {
+  margin-top: 26px;
+  margin-bottom: 26px;
+}
+
+/* Fondo de la mesa: verde con marco de neon rojo */
+body.solo-calculadora .calculator__table {
+  position: relative;
+  border-radius: 999px;
+  padding: 10px;
+  background: linear-gradient(160deg, #1a1a1e 0%, #0a0a0e 60%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 28px rgba(241, 13, 30, 0.5),
+    0 0 70px rgba(241, 13, 30, 0.28),
+    inset 0 0 30px rgba(0, 0, 0, 0.85);
+  /* Limitar al ancho del contenedor (el clon lo hace full-bleed con
+     margin-inline: calc(50% - 50vw)); aqui se mantiene centrado. */
+  max-width: 1000px;
+  margin-inline: auto !important;
+}
+
+/* Luces de neón superior e inferior del marco */
+body.solo-calculadora .calculator__table::before,
+body.solo-calculadora .calculator__table::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--cz-red);
+  box-shadow: 0 0 10px var(--cz-red), 0 0 24px var(--cz-red-glow);
+  pointer-events: none;
+}
+
+body.solo-calculadora .calculator__table::before {
+  top: -1px;
+}
+
+body.solo-calculadora .calculator__table::after {
+  bottom: -1px;
+}
+
+/* El felt verde */
+body.solo-calculadora .calculator__table-body {
+  position: relative;
+  border-radius: 999px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 40%, rgba(255, 255, 255, 0.07) 0%, transparent 60%),
+    linear-gradient(180deg, var(--cz-felt) 0%, var(--cz-felt-dark) 100%) !important;
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.55);
+  /* Proporcion de la mesa real (mas compacta que la del clon) */
+  aspect-ratio: 360 / 150;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* El <img> es solo la forma de la mesa: se oculta y deja el fondo CSS */
+body.solo-calculadora .calculator__table-body > picture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body.solo-calculadora .calculator__table-body > picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0;
+}
+
+/* El board del clon viene posicionado en absoluto (left:50%, translate(-50%,-50%)).
+   Al pasarlo a relativo esos offsets lo desplazan, asi que se resetean. */
+body.solo-calculadora .calculator__board {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto;
+  z-index: 2;
+  gap: 30px;
+}
+
+/* El .calculator__player del clon trae su propio fondo, borde y padding
+   (tarjeta dentro de la tarjeta). En el mockup el panel es una sola pieza,
+   asi que se neutralizan y el contenido fluye dentro del panel. */
+body.solo-calculadora .calculator__player {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  gap: 14px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body.solo-calculadora .calculator__player::before,
+body.solo-calculadora .calculator__player::after {
+  display: none !important;
+}
+
+/* Etiquetas Flop / Turn / River */
+body.solo-calculadora .calculator__board-group-name {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Slots de carta sobre el felt */
+body.solo-calculadora .calculator__card-slot {
+  background: rgba(0, 0, 0, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+body.solo-calculadora .calculator__card-slot::before {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* El "+" de los slots en verde neon */
+body.solo-calculadora .calculator__card-slot::after {
+  filter: drop-shadow(0 0 6px rgba(120, 255, 180, 0.55));
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   PANELES DE JUGADORES
+   --------------------------------------------------------------------------
+   El clon usa una grid de 6 columnas con 7 items (5 jugadores + 2 "Add
+   Player"). Para el diseno Chuzonic solo se muestran 2 jugadores y un
+   unico boton "Add Player" al pie, asi que se fuerzan 2 columnas y se
+   ocultan los items sobrantes (3-6) que el JS conserva en el DOM.
+   ========================================================================== */
+body.solo-calculadora .calculator__players {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: none !important;
+  gap: 22px !important;
+  margin-top: 26px !important;
+  max-width: 1000px;
+  margin-inline: auto !important;
+  /* El clon aplica transform: scale(0.8) + pointer-events:none en escritorio:
+     hay que neutralizarlo para que el layout y los clicks funcionen. */
+  transform: none !important;
+  pointer-events: auto !important;
+  width: 100% !important;
+}
+
+body.solo-calculadora .calculator__players-item {
+  position: relative;
+  grid-column: auto !important;
+  pointer-events: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  background: linear-gradient(165deg, var(--cz-panel-2) 0%, var(--cz-panel) 100%) !important;
+  border: 1px solid var(--cz-line) !important;
+  border-radius: 14px !important;
+  padding: 18px 20px 16px !important;
+  overflow: hidden;
+}
+
+/* Ocultar los slots "Add Player" intermedios (jugadores 3-6) que el clon
+   renderiza dentro de la grid. El JS sigue gestionandolos por si el
+   usuario agrega mas jugadores. */
+body.solo-calculadora .calculator__players-item:not(.is-added) {
+  display: none !important;
+}
+
+/* El boton "Add Player" final (data-player-id="7") ocupa toda la fila */
+body.solo-calculadora .calculator__players-item[data-player-id='7'] {
+  grid-column: 1 / -1 !important;
+}
+
+/* El "Add Player" dentro de la zona de controles tambien se muestra como
+   boton principal cuando es el unico disponible. */
+body.solo-calculadora .calculator__controls .calculator__player-add {
+  display: none !important;
+}
+
+/* Filete rojo vertical a la izquierda */
+body.solo-calculadora .calculator__players-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--cz-red) 0%, rgba(241, 13, 30, 0.1) 85%);
+  box-shadow: 0 0 14px var(--cz-red-glow);
+}
+
+body.solo-calculadora .calculator__player-name {
+  color: var(--cz-text) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+  padding-bottom: 10px !important;
+  position: relative;
+  width: 100% !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  text-transform: none !important;
+}
+
+/* Subrayado rojo del nombre del jugador */
+body.solo-calculadora .calculator__player-name::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cz-red), rgba(241, 13, 30, 0.05));
+}
+
+body.solo-calculadora .calculator__player-cards {
+  justify-content: center;
+  gap: 14px;
+  margin: 14px 0 12px;
+}
+
+/* Slots de carta en los paneles */
+body.solo-calculadora .calculator__player .calculator__card-slot {
+  width: 58px !important;
+  max-width: 58px;
+  height: 84px;
+  max-height: 84px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+body.solo-calculadora .calculator__player .calculator__card-slot::after {
+  opacity: 0.75;
+}
+
+/* Porcentajes Win / Tie (en linea, como en el mockup).
+   El clon los pone en columna (flex-direction: column) con `width:100%` en
+   cada item; hay que forzar fila y ancho automatico. */
+body.solo-calculadora .calculator__player-chances {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: baseline !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: auto !important;
+  max-width: none !important;
+  text-align: left !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item-value {
+  color: var(--cz-text) !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  order: 2;
+}
+
+body.solo-calculadora .calculator__player-chances-item-name {
+  color: var(--cz-text-dim) !important;
+  font-size: 13px !important;
+  order: 1;
+}
+
+/* ==========================================================================
+   BOTON ADD PLAYER
+   --------------------------------------------------------------------------
+   En el mockup es una barra ancha con borde rojo neon, centrada, con el
+   icono "+" a la izquierda del texto.
+   ========================================================================== */
+body.solo-calculadora .calculator__players-item[data-player-id='7'] {
+  grid-column: 1 / -1 !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible;
+}
+
+body.solo-calculadora .calculator__players-item[data-player-id='7']::before {
+  display: none;
+}
+
+body.solo-calculadora .calculator__player-add {
+  grid-column: 1 / -1;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+  background: rgba(241, 13, 30, 0.07) !important;
+  border: 1px solid rgba(241, 13, 30, 0.55) !important;
+  border-radius: 12px !important;
+  color: var(--cz-text) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+body.solo-calculadora .calculator__player-add:hover {
+  background: rgba(241, 13, 30, 0.14) !important;
+  border-color: var(--cz-red) !important;
+  box-shadow: 0 0 24px rgba(241, 13, 30, 0.35);
+}
+
+/* Icono + rojo del boton (a la izquierda, como en el mockup) */
+body.solo-calculadora .calculator__player-add::after {
+  order: -1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
+  filter: drop-shadow(0 0 6px var(--cz-red-glow));
+}
+
+/* ==========================================================================
+   MODAL DE SELECCION DE CARTAS
+   --------------------------------------------------------------------------
+   Tres cosas del clon que hay que neutralizar:
+   1) En movil el modal es `position: static; display: block` -> queda siempre
+      visible en el flujo de la pagina.
+   2) Su contenedor (.calculator__controls) tiene `backdrop-filter: blur(3px)`,
+      y un backdrop-filter crea un containing block, por lo que el modal con
+      position:fixed se posiciona respecto a ESE contenedor y no al viewport
+      (aparece desplazado 900px hacia abajo).
+   3) El clon llama `Sa(1)` al inicializar, que abre el modal del jugador 1
+      automaticamente. En el sitio original el modal solo se abre al pulsar
+      un slot. Aqui se oculta hasta que el usuario interactue, y el JS
+      original lo reabre con la clase `is-open`.
+   ========================================================================== */
+body.solo-calculadora .calculator__controls {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.solo-calculadora .calculator__modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: block !important;
+  overflow-y: auto !important;
+  background: rgba(3, 4, 8, 0.94) !important;
+  backdrop-filter: blur(6px);
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(30px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 500;
+}
+
+/* El clon marca el modal como abierto al cargar (Sa(1) en el init).
+   Se ignora hasta que el usuario haya pulsado un slot real: se marca el
+   atributo data-cz-user-touched en el primer click, y solo a partir de ahi
+   se respeta la clase is-open. */
+body.solo-calculadora .calculator__modal:not([data-cz-user-touched]) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.solo-calculadora .calculator__modal[data-cz-user-touched].is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
+
+/* Contenido del modal: centrado, con el estilo Chuzonic */
+body.solo-calculadora .calculator__modal-content {
+  background: linear-gradient(165deg, var(--cz-panel-2), var(--cz-panel)) !important;
+  border: 1px solid rgba(241, 13, 30, 0.4) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 0 60px rgba(241, 13, 30, 0.3), 0 30px 70px rgba(0, 0, 0, 0.7) !important;
+  padding: 22px 20px !important;
+  margin: 40px auto !important;
+  max-width: 1180px;
+  max-height: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+body.solo-calculadora .calculator__modal-title {
+  display: block !important;
+  color: var(--cz-text) !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  text-align: center !important;
+  margin-bottom: 4px !important;
+}
+
+body.solo-calculadora .calculator__modal-cards {
+  margin-top: 0 !important;
+}
+
+body.solo-calculadora .calculator__cards {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 18px !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  overflow-y: auto !important;
+  max-height: 60vh;
+}
+
+/* Cada palo es una columna de 13 cartas (el clon usa repeat(5, 1fr)) */
+body.solo-calculadora .calculator__cards-group {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 8px !important;
+  justify-content: flex-start !important;
+  width: auto !important;
+}
+
+body.solo-calculadora .calculator__modal-cards .calculator__card {
+  max-width: 42px !important;
+  height: 60px !important;
+  aspect-ratio: auto !important;
+  font-size: 17px !important;
+  border: 1px solid rgba(0, 0, 0, 0.35) !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  color: #111 !important;
+}
+
+body.solo-calculadora .calculator__modal-btns {
+  display: flex !important;
+  gap: 12px !important;
+  justify-content: center !important;
+}
+
+body.solo-calculadora .calculator__modal-close {
+  background: rgba(241, 13, 30, 0.2) !important;
+}
+
+body.solo-calculadora .button {
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+}
+
+body.solo-calculadora .calculator__modal-done.button {
+  background: var(--cz-red) !important;
+  color: #fff !important;
+  box-shadow: 0 0 18px rgba(241, 13, 30, 0.45);
+}
+
+body.solo-calculadora .calculator__modal-reset.button {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: var(--cz-text) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1024px) {
+  body.solo-calculadora .calculator__players {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cz-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .cz-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    border-top: 1px solid var(--cz-line);
+    padding-top: 6px;
+  }
+
+  .cz-nav__item {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .cz-logo__wordmark {
+    height: 30px;
+  }
+
+  .cz-logo__emblem {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 640px) {
+  body.solo-calculadora .calculator__player .calculator__card-slot {
+    width: 48px !important;
+    max-width: 48px;
+    height: 70px;
+    max-height: 70px;
+  }
+
+  body.solo-calculadora .calculator__table {
+    border-radius: 40px;
+  }
+
+  body.solo-calculadora .calculator__table-body {
+    border-radius: 32px;
+  }
+}
