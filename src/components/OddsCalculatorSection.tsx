@@ -134,9 +134,9 @@ export const ODDS_CALCULATOR_HTML = `<section class="calculator margin-bottom">
 				<button class="calculator__controls-btn calculator__player-add" type="button">
 					Add Player				</button>
 				<div class="calculator__modal">
-					<div class="calculator__modal-close"></div>
-					<div class="calculator__modal-title">Player 1</div>
 					<div class="calculator__modal-content">
+						<div class="calculator__modal-close"></div>
+						<div class="calculator__modal-title">Player 1</div>
 						<div class="calculator__modal-cards">
 							<div class="calculator__player-cards">
 								<div class="calculator__card-slot"></div>

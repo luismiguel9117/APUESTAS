@@ -149,22 +149,34 @@
     var inicial = document.querySelector('.calculator__tabs li.is-active');
     activar(inicial ? inicial.dataset.gameType : 'holdem');
 
-    // --- Modal de cartas ---
-    // El clon abre el modal del jugador 1 automaticamente al inicializar
-    // (llama Sa(1) en su init). En el sitio original solo se abre al pulsar
-    // un slot. Aqui lo mantenemos cerrado hasta el primer clic real del
-    // usuario en una casilla, y a partir de ahi se comporta normal.
+    // --- Modal de cartas en móvil ---
     var modal = document.querySelector('.calculator__modal');
-    if (modal) {
-      document.addEventListener(
-        'click',
-        function (e) {
-          var slot = e.target.closest ? e.target.closest('.calculator__card-slot') : null;
-          if (!slot) return;
-          modal.setAttribute('data-cz-user-touched', '1');
-        },
-        true
-      );
+    var modalContent = document.querySelector('.calculator__modal-content');
+    var modalTitle = document.querySelector('.calculator__modal-title');
+    var modalClose = document.querySelector('.calculator__modal-close');
+
+    if (modal && modalContent) {
+      // Asegurar que título y cierre vivan dentro del modal-content como una tarjeta limpia
+      if (modalTitle && modalTitle.parentNode !== modalContent) {
+        modalContent.insertBefore(modalTitle, modalContent.firstChild);
+      }
+      if (modalClose && modalClose.parentNode !== modalContent) {
+        modalContent.insertBefore(modalClose, modalContent.firstChild);
+      }
+
+      // Cerrar modal al tocar el fondo oscuro fuera de la tarjeta en móvil
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+          var closeBtn = modal.querySelector('.calculator__modal-close');
+          if (closeBtn) {
+            closeBtn.click();
+          } else {
+            modal.classList.remove('is-open');
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+          }
+        }
+      });
     }
   }
 
