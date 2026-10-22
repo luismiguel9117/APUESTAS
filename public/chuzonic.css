@@ -312,9 +312,18 @@ body.solo-calculadora .calculator__card-slot::before {
   border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
+/* El "+" de los slots: la cruz blanca original, limpia y sin glow.
+   El drop-shadow verde anterior la hacia ver grande y difusa. */
 body.solo-calculadora .calculator__card-slot::after {
-  filter: drop-shadow(0 0 6px rgba(120, 255, 180, 0.55));
-  opacity: 0.92;
+  filter: none !important;
+  opacity: 0.8 !important;
+  transform: translate(-50%, -50%) scale(0.82) !important;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+body.solo-calculadora .calculator__card-slot:hover::after {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(0.95) !important;
 }
 
 /* ==========================================================================
@@ -432,9 +441,21 @@ body.solo-calculadora .calculator__players .calculator__player-add:hover {
   background: rgba(241, 13, 30, 0.12) !important;
 }
 
+/* El "+" de Add Player: cruz simple roja (sin el circulo, que parecia una mira)
+   y sin glow. */
 body.solo-calculadora .calculator__players .calculator__player-add::after {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
-  filter: drop-shadow(0 0 5px var(--cz-red-glow));
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><path d='M12 6.5v11M6.5 12h11' stroke='%23F10D1E' stroke-width='2.4' stroke-linecap='round'/></svg>") !important;
+  background-size: 18px 18px !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  filter: none !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+body.solo-calculadora .calculator__players .calculator__player-add:hover::after {
+  opacity: 1 !important;
+  transform: scale(1.12) !important;
 }
 
 /* ==========================================================================
