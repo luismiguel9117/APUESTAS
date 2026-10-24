@@ -312,9 +312,18 @@ body.solo-calculadora .calculator__card-slot::before {
   border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
+/* El "+" de los slots: la cruz blanca original, limpia y sin glow.
+   El drop-shadow verde anterior la hacia ver grande y difusa. */
 body.solo-calculadora .calculator__card-slot::after {
-  filter: drop-shadow(0 0 6px rgba(120, 255, 180, 0.55));
-  opacity: 0.92;
+  filter: none !important;
+  opacity: 0.8 !important;
+  transform: translate(-50%, -50%) scale(0.82) !important;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+body.solo-calculadora .calculator__card-slot:hover::after {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(0.95) !important;
 }
 
 /* ==========================================================================
@@ -325,19 +334,33 @@ body.solo-calculadora .calculator__players-item {
   border: 0 !important;
   border-radius: 0 !important;
   padding: 0 !important;
-  overflow: visible;
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 190px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* Tarjeta de jugador (Player 1 y Player 2) */
 body.solo-calculadora .calculator__player {
   position: relative;
-  background: linear-gradient(165deg, rgba(12, 14, 22, 0.92) 0%, rgba(7, 8, 14, 0.95) 100%) !important;
+  background: linear-gradient(165deg, rgba(14, 18, 28, 0.94) 0%, rgba(8, 10, 16, 0.96) 100%) !important;
   border: 1px solid var(--cz-line) !important;
   border-radius: 16px !important;
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.65) !important;
-  padding: 16px 20px !important;
-  gap: 10px !important;
-  overflow: hidden;
+  padding: 12px 18px 14px 18px !important;
+  box-sizing: border-box !important;
+  width: 270px !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  overflow: visible !important;
+  flex-shrink: 0 !important;
 }
 
 /* Filete rojo vertical a la izquierda del panel */
@@ -351,23 +374,25 @@ body.solo-calculadora .calculator__player::before {
   background: linear-gradient(180deg, var(--cz-red) 0%, rgba(241, 13, 30, 0.1) 90%);
   box-shadow: 0 0 14px var(--cz-red-glow);
   z-index: 2;
+  border-radius: 16px 0 0 16px !important;
 }
 
 body.solo-calculadora .calculator__player::after {
-  background-image: none !important;
+  display: none !important;
 }
 
 body.solo-calculadora .calculator__player-name {
   color: var(--cz-text) !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 700 !important;
-  margin-bottom: 4px !important;
-  padding-bottom: 8px !important;
+  margin: 0 !important;
+  padding: 0 0 6px 0 !important;
   position: relative;
   width: 100% !important;
   text-align: left !important;
   align-self: flex-start !important;
   text-transform: none !important;
+  line-height: 1.2 !important;
 }
 
 body.solo-calculadora .calculator__player-name::after {
@@ -381,30 +406,82 @@ body.solo-calculadora .calculator__player-name::after {
 }
 
 body.solo-calculadora .calculator__player-cards {
+  display: flex !important;
   justify-content: center !important;
-  gap: 12px !important;
-  margin: 6px 0 !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 2px 0 !important;
+  width: 100% !important;
 }
 
-/* Win / Tie */
+/* Win / Tie en una sola fila equilibrada sin desbordar */
 body.solo-calculadora .calculator__player-chances {
+  display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
-  gap: 4px !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  width: 100% !important;
+  margin: 2px 0 0 0 !important;
+  padding: 0 !important;
 }
 
 body.solo-calculadora .calculator__player-chances-item {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
   gap: 6px !important;
-}
-
-body.solo-calculadora .calculator__player-chances-item-value {
-  color: var(--cz-text) !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
+  width: auto !important;
+  margin: 0 !important;
 }
 
 body.solo-calculadora .calculator__player-chances-item-name {
   color: var(--cz-text-dim) !important;
   font-size: 13px !important;
+  font-weight: 600 !important;
+  order: 1 !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item-value {
+  color: var(--cz-text) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  order: 2 !important;
+}
+
+/* Soporte para Omaha H/L y 7-Stud H/L (4 valores) */
+body.solo-calculadora .calculator__player-chances:has(:nth-child(3)) {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4px 16px !important;
+}
+
+/* Cartas asignadas en slots de jugador o de mesa */
+body.solo-calculadora .calculator__card-slot .calculator__card {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  border-radius: inherit !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.solo-calculadora .calculator__card-slot .calculator__card[data-suit="hearts"],
+body.solo-calculadora .calculator__card-slot .calculator__card[data-suit="diamonds"] {
+  color: #e01b24 !important;
+}
+
+body.solo-calculadora .calculator__card-slot .calculator__card[data-suit="spades"],
+body.solo-calculadora .calculator__card-slot .calculator__card[data-suit="clubs"] {
+  color: #121212 !important;
 }
 
 /* Botones Add Player alrededor de la mesa */
@@ -433,27 +510,36 @@ body.solo-calculadora .calculator__players .calculator__player-add:hover {
 }
 
 body.solo-calculadora .calculator__players .calculator__player-add::after {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
-  filter: drop-shadow(0 0 5px var(--cz-red-glow));
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><path d='M12 6.5v11M6.5 12h11' stroke='%23F10D1E' stroke-width='2.4' stroke-linecap='round'/></svg>") !important;
+  background-size: 18px 18px !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  filter: none !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+body.solo-calculadora .calculator__players .calculator__player-add:hover::after {
+  opacity: 1 !important;
+  transform: scale(1.12) !important;
 }
 
 /* ==========================================================================
    4. PANEL DE CONTROL Y CARTAS (ABAJO EN PC)
    ========================================================================== */
-/* Contenedor inferior translúcido estilo Chuzonic */
-body.solo-calculadora .calculator__controls {
-  margin-top: 32px;
-  border-radius: 20px !important;
-  padding: 24px 30px !important;
-  border: 1px solid rgba(241, 13, 30, 0.28) !important;
-  background: linear-gradient(165deg, rgba(12, 14, 22, 0.85) 0%, rgba(6, 7, 12, 0.92) 100%) !important;
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.6), 0 0 28px rgba(241, 13, 30, 0.12) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-}
-
 /* En desktop (min-width: 1024px), las cartas se muestran abajo integradas */
 @media (min-width: 1024px) {
+  body.solo-calculadora .calculator__controls {
+    margin-top: 32px;
+    border-radius: 20px !important;
+    padding: 24px 30px !important;
+    border: 1px solid rgba(241, 13, 30, 0.28) !important;
+    background: linear-gradient(165deg, rgba(12, 14, 22, 0.85) 0%, rgba(6, 7, 12, 0.92) 100%) !important;
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.6), 0 0 28px rgba(241, 13, 30, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
   body.solo-calculadora .calculator__modal {
     position: static !important;
     width: 100% !important;
@@ -491,35 +577,66 @@ body.solo-calculadora .calculator__controls {
     flex-direction: row !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 32px !important;
+    gap: 28px !important;
     overflow: visible !important;
   }
 
   body.solo-calculadora .calculator__cards-group {
     display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 8px !important;
+    grid-template-columns: repeat(5, 44px) !important;
+    gap: 6px !important;
     width: auto !important;
   }
 
+  /* Cartas verticales proporcionadas (no aplastadas) */
   body.solo-calculadora .calculator__cards .calculator__card {
-    width: 48px !important;
-    max-width: 48px !important;
-    height: 34px !important;
+    width: 44px !important;
+    max-width: 44px !important;
+    height: 64px !important;
     aspect-ratio: auto !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    border-radius: 6px !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    border-radius: 7px !important;
     background: #ffffff !important;
     color: #111111 !important;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(0, 0, 0, 0.14) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
     cursor: pointer !important;
-    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card::after {
+    width: 16px !important;
+    height: 16px !important;
+    display: block !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="hearts"],
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="diamonds"] {
+    color: #e01b24 !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="spades"],
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="clubs"] {
+    color: #121212 !important;
   }
 
   body.solo-calculadora .calculator__cards .calculator__card:hover {
-    transform: translateY(-4px) scale(1.08) !important;
-    box-shadow: 0 6px 14px rgba(241, 13, 30, 0.4) !important;
+    transform: translateY(-4px) scale(1.06) !important;
+    box-shadow: 0 8px 18px rgba(241, 13, 30, 0.45) !important;
+    border-color: var(--cz-red) !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card.is-disabled {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    filter: grayscale(1) !important;
   }
 
   /* Los botones de Reset Cards abajo de la parrilla de cartas */
@@ -533,22 +650,33 @@ body.solo-calculadora .calculator__controls {
     display: none !important;
   }
 
+  body.solo-calculadora .calculator__controls-btn-reset,
   body.solo-calculadora .calculator__modal-reset.button {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     color: var(--cz-text) !important;
-    padding: 10px 26px !important;
-    height: auto !important;
+    padding: 10px 28px !important;
+    height: 44px !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     border-radius: 999px !important;
+    cursor: pointer !important;
     transition: all 0.2s ease !important;
   }
 
+  body.solo-calculadora .calculator__controls-btn-reset:hover,
   body.solo-calculadora .calculator__modal-reset.button:hover {
     border-color: var(--cz-red) !important;
     box-shadow: 0 0 16px rgba(241, 13, 30, 0.35) !important;
     color: #fff !important;
+  }
+
+  body.solo-calculadora .calculator__controls-btn-reset.is-disabled,
+  body.solo-calculadora .calculator__modal-reset.is-disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
   }
 }
 
@@ -584,31 +712,306 @@ body.solo-calculadora .calculator__controls {
     height: 38px;
   }
 
-  /* En móvil el modal se abre como popup superpuesto */
+  /* Resetear .calculator__controls en móvil para evitar containing block con backdrop-filter */
+  body.solo-calculadora .calculator__controls {
+    margin-top: 18px !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* Asegurar que el contenedor del calculador quede encima del header al abrirse */
+  body.solo-calculadora .calculator.is-higher {
+    z-index: 9999 !important;
+  }
+
+  /* En móvil el modal se abre como popup superpuesto a pantalla completa */
   body.solo-calculadora .calculator__modal {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(3, 4, 8, 0.94) !important;
-    backdrop-filter: blur(8px) !important;
-    z-index: 500 !important;
-    display: none !important;
+    width: 100dvw !important;
+    height: 100dvh !important;
+    background: rgba(4, 6, 12, 0.88) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 99999 !important;
     overflow-y: auto !important;
-    padding: 20px !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 16px 10px 32px 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__modal:not(.is-open) {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 
   body.solo-calculadora .calculator__modal.is-open {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    visibility: visible !important;
   }
 
   body.solo-calculadora .calculator__modal-content {
-    background: linear-gradient(165deg, var(--cz-panel-2), var(--cz-panel)) !important;
-    border: 1px solid rgba(241, 13, 30, 0.4) !important;
-    border-radius: 18px !important;
-    padding: 20px !important;
-    margin: 40px auto !important;
-    max-width: 500px !important;
+    position: relative !important;
+    background: linear-gradient(175deg, #181d2a 0%, #0d1017 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85) !important;
+    border-radius: 16px !important;
+    padding: 16px 12px 16px 12px !important;
+    margin: auto 0 !important;
+    max-width: 400px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* Botón de cierre (X) en el modal */
+  body.solo-calculadora .calculator__modal-close {
+    display: flex !important;
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 32px !important;
+    height: 32px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 50% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
+  }
+
+  body.solo-calculadora .calculator__modal-close:hover,
+  body.solo-calculadora .calculator__modal-close:active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: none !important;
+  }
+
+  /* Título del jugador o board */
+  body.solo-calculadora .calculator__modal-title {
+    display: block !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    margin: 2px 36px 0 36px !important;
+    letter-spacing: -0.01em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Slots de cartas dentro del modal */
+  body.solo-calculadora .calculator__modal-cards {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__modal-cards .calculator__player-cards,
+  body.solo-calculadora .calculator__modal-cards .calculator__board {
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  body.solo-calculadora .calculator__modal-cards .calculator__card-slot {
+    width: 44px !important;
+    max-width: 44px !important;
+    height: 62px !important;
+    max-height: 62px !important;
+    aspect-ratio: auto !important;
+    border-radius: 8px !important;
+    background: rgba(12, 45, 26, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__modal-cards .calculator__card-slot.is-active {
+    box-shadow: 0 0 0 2px #e5a93c, 0 0 10px rgba(229, 169, 60, 0.45) !important;
+    border-color: #e5a93c !important;
+  }
+
+  body.solo-calculadora .calculator__modal-cards .calculator__card-slot .calculator__card {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border: none !important;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+    font-size: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Selector de cartas (parrilla móvil) */
+  body.solo-calculadora .calculator__cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  body.solo-calculadora .calculator__cards-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card {
+    flex: 0 0 calc((100% - 18px) / 7) !important;
+    max-width: 48px !important;
+    min-width: 0 !important;
+    height: 32px !important;
+    aspect-ratio: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-radius: 5px !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    transition: transform 0.12s ease !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card::after {
+    content: "";
+    display: inline-block !important;
+    width: 10px !important;
+    height: 10px !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card:active {
+    transform: scale(0.92) !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="hearts"],
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="diamonds"] {
+    color: #dc2626 !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="spades"],
+  body.solo-calculadora .calculator__cards .calculator__card[data-suit="clubs"] {
+    color: #111111 !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card.is-disabled {
+    opacity: 0.25 !important;
+    pointer-events: none !important;
+    filter: grayscale(1) !important;
+  }
+
+  /* Botones Done y Reset dentro del modal móvil */
+  body.solo-calculadora .calculator__modal-btns {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    margin-top: 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body.solo-calculadora .calculator__modal-done.button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+    height: 40px !important;
+    padding: 6px 16px !important;
+    border-radius: 10px !important;
+    background: #10b981 !important;
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3) !important;
+    transition: all 0.2s ease !important;
+    touch-action: manipulation !important;
+  }
+
+  body.solo-calculadora .calculator__modal-done.button.is-disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  body.solo-calculadora .calculator__modal-reset.button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+    height: 40px !important;
+    padding: 6px 16px !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: #e2e8f0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    touch-action: manipulation !important;
   }
 }
