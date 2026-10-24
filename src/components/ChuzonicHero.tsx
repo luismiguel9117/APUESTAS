@@ -160,7 +160,6 @@ export function ChuzonicHero() {
             <span />
           </button>
           <Link href="/" className="cz-portal-logo">
-            <img src="/assets/chuzonic/chuzonic-emblem.webp" alt="Chuzonic" className="cz-portal-logo__emblem" />
             <span className="cz-portal-logo__text">Chuzonic<span className="cz-portal-logo__red">Play</span></span>
           </Link>
         </div>
@@ -295,6 +294,20 @@ export function ChuzonicHero() {
 
             <button
               type="button"
+              className={`cz-sidebar-item ${sidebarActive === 'esports' ? 'is-active' : ''}`}
+              onClick={() => setSidebarActive('esports')}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="6" width="20" height="12" rx="2" />
+                <path d="M6 12h4m-2-2v4" />
+                <circle cx="15" cy="11" r="1" />
+                <circle cx="17" cy="13" r="1" />
+              </svg>
+              <span>Esports</span>
+            </button>
+
+            <button
+              type="button"
               className="cz-sidebar-item cz-sidebar-item--more"
               onClick={() => setSidebarActive('mas')}
             >
@@ -414,10 +427,10 @@ export function ChuzonicHero() {
 
             {/* COLUMNA DERECHA: IMAGEN DE FICHAS 3D Y BLOQUE "ESTO ES CHUZONICPLAY" */}
             <div className="cz-portal-hero__right">
-              {/* IMAGEN DECORATIVA SUPERIOR CON CHIPS Y CARTAS NEÓN */}
+              {/* IMAGEN DECORATIVA SUPERIOR CON CHIPS Y CARTAS NEÓN EN ALTA RESOLUCIÓN */}
               <div className="cz-hero-illustration">
                 <img
-                  src="/assets/chuzonic/hero-reference.jpg"
+                  src="/assets/chuzonic/poker-chips-cards.jpg"
                   alt="Chuzonic Poker chips and cards"
                   className="cz-hero-illustration__img"
                 />

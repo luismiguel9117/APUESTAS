@@ -23,13 +23,17 @@
   --cz-text-dim: #5c6479;
 }
 
-/* Base global */
+/* Base global con el fondo de estadio oficial y viñeta oscura */
 .cz-portal-layout {
   min-height: 100vh;
   background-color: var(--cz-bg-dark);
   background-image:
-    radial-gradient(ellipse 80% 50% at 75% 20%, rgba(13, 71, 161, 0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 20% 40%, rgba(241, 13, 30, 0.08) 0%, transparent 60%);
+    linear-gradient(180deg, rgba(7, 9, 14, 0.82) 0%, rgba(7, 9, 14, 0.94) 100%),
+    url('/assets/chuzonic/stadium-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--cz-text-main);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
@@ -45,8 +49,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 24px;
-  background: rgba(10, 12, 19, 0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(9, 11, 17, 0.94);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--cz-border);
   gap: 20px;
 }
@@ -78,35 +82,31 @@
   border-radius: 2px;
 }
 
+/* Solo texto para el logo */
 .cz-portal-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
 }
 
-.cz-portal-logo__emblem {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-}
-
 .cz-portal-logo__text {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
   color: #ffffff;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
+  display: inline-block;
+  user-select: none;
 }
 
 .cz-portal-logo__red {
   color: var(--cz-red);
 }
 
-/* Nav superior */
+/* Nav superior: Inicio | Noticias | Odds Calculator */
 .cz-portal-nav {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -116,11 +116,11 @@
 }
 
 .cz-portal-nav__link {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--cz-text-muted);
   text-decoration: none;
-  padding: 6px 4px;
+  padding: 8px 4px;
   position: relative;
   transition: color 0.2s ease;
   white-space: nowrap;
@@ -143,7 +143,7 @@
   height: 3px;
   background: var(--cz-red);
   border-radius: 3px 3px 0 0;
-  box-shadow: 0 0 10px var(--cz-red);
+  box-shadow: 0 0 12px var(--cz-red);
 }
 
 /* Right header (Search + Login/Register) */
@@ -160,8 +160,8 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--cz-border);
   border-radius: 20px;
-  padding: 6px 14px;
-  width: 250px;
+  padding: 7px 16px;
+  width: 260px;
   color: var(--cz-text-muted);
 }
 
@@ -219,7 +219,7 @@
 /* Sidebar lateral */
 .cz-portal-sidebar {
   width: 76px;
-  background: #090b11;
+  background: rgba(9, 11, 17, 0.9);
   border-right: 1px solid var(--cz-border);
   display: flex;
   flex-direction: column;
@@ -278,7 +278,7 @@
   width: 100%;
 }
 
-/* Grid del Hero: Izquierda (Promos) + Derecha (Esto es ChuzonicPlay) */
+/* Grid del Hero */
 .cz-portal-hero {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
@@ -531,7 +531,7 @@
   transform: translateX(2px);
 }
 
-/* Columna Derecha (Fichas 3D + Esto es ChuzonicPlay) */
+/* Columna Derecha: Ilustración de fichas y cartas 3D + Esto es ChuzonicPlay */
 .cz-portal-hero__right {
   display: flex;
   flex-direction: column;
@@ -540,27 +540,29 @@
 
 .cz-hero-illustration {
   width: 100%;
-  height: 280px;
+  height: 290px;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--cz-border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #000000;
 }
 
 .cz-hero-illustration__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 70% 30%;
-  filter: contrast(1.1) brightness(1.05);
+  object-position: center;
+  display: block;
 }
 
 .cz-about-chuzonic {
-  background: var(--cz-bg-surface);
+  background: rgba(12, 15, 23, 0.88);
   border: 1px solid var(--cz-border);
   border-radius: 20px;
   padding: 26px 28px;
+  backdrop-filter: blur(10px);
 }
 
 .cz-about-chuzonic__title {
@@ -638,6 +640,7 @@
   overflow: hidden;
   transition: all 0.25s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .cz-portal-banner-card:hover {
@@ -646,18 +649,18 @@
 }
 
 .cz-portal-banner-card--poker {
-  background: linear-gradient(135deg, #18090b 0%, #0c0f17 100%);
-  border-color: rgba(241, 13, 30, 0.25);
+  background: linear-gradient(135deg, rgba(24, 9, 11, 0.95) 0%, rgba(12, 15, 23, 0.95) 100%);
+  border-color: rgba(241, 13, 30, 0.35);
 }
 
 .cz-portal-banner-card--casino {
-  background: linear-gradient(135deg, #091322 0%, #0c0f17 100%);
-  border-color: rgba(15, 128, 252, 0.25);
+  background: linear-gradient(135deg, rgba(9, 19, 34, 0.95) 0%, rgba(12, 15, 23, 0.95) 100%);
+  border-color: rgba(15, 128, 252, 0.35);
 }
 
 .cz-portal-banner-card--sports {
-  background: linear-gradient(135deg, #18090b 0%, #0c0f17 100%);
-  border-color: rgba(241, 13, 30, 0.25);
+  background: linear-gradient(135deg, rgba(24, 9, 11, 0.95) 0%, rgba(12, 15, 23, 0.95) 100%);
+  border-color: rgba(241, 13, 30, 0.35);
 }
 
 .cz-banner-tag {
