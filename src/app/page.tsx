@@ -3,363 +3,274 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  VipBannerSection,
   HotNewsSection,
   LatestMaterialsSection,
-  InstagramSection,
   PokerEducationSection,
   QuickToolsBannersSection,
   QuizSection,
-  SupportBannerSection,
-  CasinoGameTypesSection,
-  PopularSlotsSection,
-  CasinoEducationSection,
   YouTubeShortsSection,
-  AboutSection,
   NewsletterSection,
   PokerSoftwareSection,
   FooterSection,
 } from '@/components/PokerListingsSections';
 import { InteractiveController } from '@/components/InteractiveController';
 
-interface PartnerPromo {
+interface HeroNewsItem {
   id: number;
-  name: string;
-  badge?: string;
-  bonus: string;
-  subBonus: string;
-  rating: string;
-  logo: string;
-  reviewUrl: string;
-  siteUrl: string;
+  category: string;
+  categoryColor: 'red' | 'blue' | 'gold';
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  url: string;
 }
 
-const POKER_PROMOS: PartnerPromo[] = [
+const POKER_NEWS_ITEMS: HeroNewsItem[] = [
   {
     id: 1,
-    name: 'CoinPoker',
-    badge: 'RECOMENDADO',
-    bonus: '150% hasta $2,000',
-    subBonus: 'Bono de bienvenida + rakeback exclusivo',
-    rating: '4.8',
-    logo: '/assets/aff-data/partners/coinpoker.svg',
-    reviewUrl: '#',
-    siteUrl: 'https://coinpoker.com',
+    category: 'WSOP PARADISE',
+    categoryColor: 'red',
+    title: 'WSOP Paradise 2026: La mesa final reparte más de $10M y consagra un nuevo campeón',
+    excerpt: 'Cobertura exclusiva de la definición en Bahamas con manos históricas y análisis de faroles en river.',
+    date: 'Hace 25 min',
+    author: 'Redacción Póker',
+    url: '#noticias-poker',
   },
   {
     id: 2,
-    name: 'Americas Cardroom',
-    bonus: '100% hasta $2,000',
-    subBonus: 'Bono de bienvenida',
-    rating: '4.6',
-    logo: '/assets/aff-data/partners/americas-cardroom.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'ESTRATEGIA & ODDS',
+    categoryColor: 'gold',
+    title: 'Cálculo de Equity en el Flop: Cómo utilizar la Odds Calculator para dominar botes multijugador',
+    excerpt: 'Aprende a transformar outs en porcentajes de victoria exactos y maximiza tu valor esperado (EV).',
+    date: 'Hace 1 hora',
+    author: 'Pro Strategy',
+    url: '/odds-calculator',
   },
   {
     id: 3,
-    name: 'GGPoker',
-    bonus: '100% hasta $600',
-    subBonus: 'Bono de bienvenida + torneos exclusivos',
-    rating: '4.5',
-    logo: '/assets/aff-data/partners/ggpoker.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'HIGH ROLLER',
+    categoryColor: 'blue',
+    title: 'Triton Poker Series: Adrián Mateos logra otra victoria épica en el torneo de $100,000',
+    excerpt: 'El jugador español desplegó una masterclass de rangos de presión para remontar el heads-up definitivo.',
+    date: 'Hace 3 horas',
+    author: 'Circuito Mundial',
+    url: '#noticias-poker',
   },
   {
     id: 4,
-    name: 'JackPoker',
-    bonus: '300% hasta $2,000',
-    subBonus: 'Bono de bienvenida',
-    rating: '4.4',
-    logo: '/assets/aff-data/partners/jackpoker.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
-  },
-  {
-    id: 5,
-    name: 'BC Poker',
-    bonus: '$5 gratis + 100% hasta $200',
-    subBonus: 'Sin depósito + bono de bienvenida',
-    rating: '4.3',
-    logo: '/assets/aff-data/partners/bc-poker.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'ESCUELA DE PÓKER',
+    categoryColor: 'red',
+    title: 'Texas Hold\'em: Errores comunes al defender la Ciega Grande y cómo corregirlos',
+    excerpt: 'Descubre los rangos de call y 3-bet óptimos contra subidas de botón y posiciones tardías.',
+    date: 'Hace 5 horas',
+    author: 'Escuela Chuzonic',
+    url: '#educacion-poker',
   },
 ];
 
-const CASINO_PROMOS: PartnerPromo[] = [
+const SPORTS_NEWS_ITEMS: HeroNewsItem[] = [
   {
     id: 1,
-    name: 'BC.Game Casino',
-    badge: 'TOP CASINO',
-    bonus: '300% hasta $20,000',
-    subBonus: 'Giros gratis diarios + recargas crypto',
-    rating: '4.9',
-    logo: '/assets/aff-data/partners/bcgame-casino.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'CHAMPIONS LEAGUE',
+    categoryColor: 'blue',
+    title: 'Champions League: Cuotas, probabilidades y previa táctica para los cuartos de final',
+    excerpt: 'Análisis detallado de posesión, goles esperados (xG) y cuotas con valor en las principales casas.',
+    date: 'Hace 15 min',
+    author: 'Deportes Chuzonic',
+    url: '/noticias',
   },
   {
     id: 2,
-    name: '1Win Casino',
-    bonus: '500% en primeros 4 depósitos',
-    subBonus: 'Hasta $1,000 + 70 Tiradas Gratis',
-    rating: '4.7',
-    logo: '/assets/aff-data/partners/1win-casino.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'LALIGA',
+    categoryColor: 'red',
+    title: 'El Clásico Español: Comparativa de cuotas clave para el duelo en el Santiago Bernabéu',
+    excerpt: 'Tendencias recientes, bajas cruciales y pronóstico de probabilidad de victoria según los algoritmos.',
+    date: 'Hace 45 min',
+    author: 'Redacción Deportes',
+    url: '/noticias',
   },
   {
     id: 3,
-    name: 'Betsson Casino',
-    bonus: '100% hasta $100 + 50 Tiradas',
-    subBonus: 'Promociones semanales exclusivas',
-    rating: '4.6',
-    logo: '/assets/aff-data/partners/betsson-sports.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
-  },
-];
-
-const APUESTAS_PROMOS: PartnerPromo[] = [
-  {
-    id: 1,
-    name: '1xBet Deportes',
-    badge: 'SUPER CUOTAS',
-    bonus: '100% hasta $130',
-    subBonus: 'Con código promocional exclusivo',
-    rating: '4.8',
-    logo: '/assets/aff-data/partners/1xbet.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    category: 'PREMIER LEAGUE',
+    categoryColor: 'blue',
+    title: 'Premier League: Jornada decisiva en la lucha por el título y los puestos europeos',
+    excerpt: 'El City y el Arsenal se disputan la cima con probabilidades ajustadas a solo 3 puntos de diferencia.',
+    date: 'Hace 2 horas',
+    author: 'Fútbol Internacional',
+    url: '/noticias',
   },
   {
-    id: 2,
-    name: '888 Sports',
-    bonus: '$30 en apuestas gratis',
-    subBonus: 'Al apostar tus primeros $10',
-    rating: '4.6',
-    logo: '/assets/aff-data/partners/888-sports.svg',
-    reviewUrl: '#',
-    siteUrl: '#',
+    id: 4,
+    category: 'NBA PLAYOFFS',
+    categoryColor: 'gold',
+    title: 'NBA Playoffs: Los favoritos al anillo según los modelos matemáticos y cuotas de la semana',
+    excerpt: 'Las defensas perimetrales y el rating ofensivo inclinan las proyecciones en las series de conferencia.',
+    date: 'Hace 4 horas',
+    author: 'Basket Analytics',
+    url: '/noticias',
   },
 ];
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<'poker' | 'casino' | 'apuestas' | 'sin-deposito' | 'exclusivas'>('poker');
-  const [sidebarActive, setSidebarActive] = useState('inicio');
-
-  const getActiveList = () => {
-    switch (activeTab) {
-      case 'casino':
-        return CASINO_PROMOS;
-      case 'apuestas':
-        return APUESTAS_PROMOS;
-      case 'sin-deposito':
-        return [POKER_PROMOS[4], CASINO_PROMOS[0]];
-      case 'exclusivas':
-        return [POKER_PROMOS[0], POKER_PROMOS[2], CASINO_PROMOS[0]];
-      case 'poker':
-      default:
-        return POKER_PROMOS;
-    }
-  };
-
-  const currentList = getActiveList();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'poker' | 'odds' | 'sports'>('poker');
 
   return (
     <div className="cz-portal-app">
       <InteractiveController />
 
-      {/* 1. TOPBAR HEADER UNIFICADO FIJO */}
-      <header className="cz-portal-header">
-        <div className="cz-portal-header__left">
-          <button className="cz-portal-burger" type="button" aria-label="Abrir menú lateral">
-            <span />
-            <span />
-            <span />
-          </button>
-          <Link href="/" className="cz-portal-logo">
+      {/* 1. BARRA FLOTANTE CON HAMBURGUESA & LOGO (SIN BARRA SUPERIOR PESADA) */}
+      <div className="cz-floating-nav-bar">
+        <button
+          type="button"
+          className="cz-hamburger-btn"
+          onClick={() => setIsDrawerOpen(true)}
+          aria-label="Abrir menú de navegación"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <Link href="/" className="cz-portal-logo">
+          <span className="cz-portal-logo__text">Chuzonic<span className="cz-portal-logo__red">Play</span></span>
+        </Link>
+
+        <div className="cz-floating-quick-links">
+          <Link href="/" className="cz-floating-pill is-active">Inicio</Link>
+          <Link href="/noticias" className="cz-floating-pill">Noticias</Link>
+          <Link href="/odds-calculator" className="cz-floating-pill">Odds Calculator</Link>
+        </div>
+      </div>
+
+      {/* 2. DRAWER DESPLEGABLE QUE FUNCIONA COMO NAVBAR */}
+      <div
+        className={`cz-drawer-backdrop ${isDrawerOpen ? 'is-open' : ''}`}
+        onClick={() => setIsDrawerOpen(false)}
+      />
+
+      <aside className={`cz-drawer-sidebar ${isDrawerOpen ? 'is-open' : ''}`}>
+        <div className="cz-drawer-header">
+          <Link href="/" className="cz-portal-logo" onClick={() => setIsDrawerOpen(false)}>
             <span className="cz-portal-logo__text">Chuzonic<span className="cz-portal-logo__red">Play</span></span>
           </Link>
+          <button
+            type="button"
+            className="cz-drawer-close"
+            onClick={() => setIsDrawerOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            ✕
+          </button>
         </div>
 
-        <nav className="cz-portal-nav" aria-label="Navegación principal">
-          <Link href="/" className="cz-portal-nav__link is-active">Inicio</Link>
-          <Link href="/noticias" className="cz-portal-nav__link">Noticias</Link>
-          <Link href="/odds-calculator" className="cz-portal-nav__link">Odds Calculator</Link>
-        </nav>
-
-        <div className="cz-portal-header__right">
-          <div className="cz-portal-search">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="cz-drawer-body">
+          <div className="cz-drawer-search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="text" placeholder="Buscar promociones, casas, noticias..." />
+            <input type="text" placeholder="Buscar noticias, póker, cuotas..." />
           </div>
-          <button type="button" className="cz-portal-btn cz-portal-btn--ghost">Iniciar sesión</button>
-          <button type="button" className="cz-portal-btn cz-portal-btn--primary">Regístrate</button>
+
+          <div>
+            <div className="cz-drawer-section-title">Navegación Principal</div>
+            <nav className="cz-drawer-nav-list">
+              <Link href="/" className="cz-drawer-nav-item is-active" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Inicio</span>
+              </Link>
+
+              <Link href="/noticias" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+                  <path d="M18 14h-8M15 18h-5M18 6h-8" />
+                </svg>
+                <span>Noticias Deportivas</span>
+              </Link>
+
+              <Link href="/odds-calculator" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M12 8v8" />
+                  <path d="M8 12h8" />
+                </svg>
+                <span>Odds Calculator</span>
+                <span className="cz-drawer-nav-badge">HOT</span>
+              </Link>
+            </nav>
+          </div>
+
+          <div>
+            <div className="cz-drawer-section-title">Póker & Contenidos</div>
+            <nav className="cz-drawer-nav-list">
+              <a href="#noticias-poker" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <span style={{ fontSize: '15px' }}>🂡</span>
+                <span>Noticias de Póker</span>
+              </a>
+
+              <a href="#educacion-poker" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+                <span>Estrategia & Escuela</span>
+              </a>
+
+              <a href="#quiz-poker" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>Quiz de Manos</span>
+              </a>
+
+              <a href="#herramientas" className="cz-drawer-nav-item" onClick={() => setIsDrawerOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                </svg>
+                <span>Herramientas Profesionales</span>
+              </a>
+            </nav>
+          </div>
         </div>
-      </header>
 
-      {/* 2. CONTENEDOR VIEWPORT: SIDEBAR ACOMPAÑA TODO EL SCROLL + STREAM CENTRAL */}
+        <div className="cz-drawer-footer">
+          <Link href="/odds-calculator" className="cz-drawer-cta" onClick={() => setIsDrawerOpen(false)}>
+            <span>🧮 Abrir Odds Calculator</span>
+            <span>→</span>
+          </Link>
+        </div>
+      </aside>
+
+      {/* 3. CONTENIDO PRINCIPAL FLUIDO A PANTALLA COMPLETA */}
       <div className="cz-portal-viewport">
-        {/* SIDEBAR LATERAL IZQUIERDO FIJO/STICKY DURANTE TODO EL SCROLL */}
-        <aside className="cz-portal-sidebar">
-          <nav className="cz-portal-sidebar__nav">
-            <Link
-              href="/"
-              className={`cz-sidebar-item ${sidebarActive === 'inicio' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('inicio')}
-              title="Inicio"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              <span>Inicio</span>
-            </Link>
-
-            <Link
-              href="/noticias"
-              className={`cz-sidebar-item ${sidebarActive === 'noticias' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('noticias')}
-              title="Noticias"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
-                <path d="M18 14h-8M15 18h-5M18 6h-8" />
-              </svg>
-              <span>Noticias</span>
-            </Link>
-
-            <Link
-              href="/odds-calculator"
-              className={`cz-sidebar-item ${sidebarActive === 'poker' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('poker')}
-              title="Póker"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M12 8v8" />
-                <path d="M8 12h8" />
-              </svg>
-              <span>Póker</span>
-            </Link>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'futbol' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('futbol')}
-              title="Fútbol"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                <path d="M2 12h20" />
-              </svg>
-              <span>Fútbol</span>
-            </button>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'envivo' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('envivo')}
-              title="En Vivo"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                <line x1="8" y1="21" x2="16" y2="21" />
-                <line x1="12" y1="17" x2="12" y2="21" />
-              </svg>
-              <span>En Vivo</span>
-            </button>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'casino' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('casino')}
-              title="Casino"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="6" width="20" height="12" rx="2" />
-                <circle cx="12" cy="12" r="2" />
-                <path d="M6 12h.01M18 12h.01" />
-              </svg>
-              <span>Casino</span>
-            </button>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'guias' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('guias')}
-              title="Guías"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-              </svg>
-              <span>Guías</span>
-            </button>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'comparativas' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('comparativas')}
-              title="Comparativas"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                <path d="M4 22h16" />
-                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-              </svg>
-              <span>Comparativas</span>
-            </button>
-
-            <button
-              type="button"
-              className={`cz-sidebar-item ${sidebarActive === 'esports' ? 'is-active' : ''}`}
-              onClick={() => setSidebarActive('esports')}
-              title="Esports"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="6" width="20" height="12" rx="2" />
-                <path d="M6 12h4m-2-2v4" />
-                <circle cx="15" cy="11" r="1" />
-                <circle cx="17" cy="13" r="1" />
-              </svg>
-              <span>Esports</span>
-            </button>
-          </nav>
-        </aside>
-
-        {/* ÁREA CENTRAL QUE DESLIZA: HERO + STREAM DE CONTENIDOS Y NOTICIAS */}
         <div className="cz-portal-main-stream">
-          {/* HERO SECTION DE PROMOCIONES Y BONOS */}
+          {/* HERO PRINCIPAL */}
           <section className="cz-portal-hero-section">
             <div className="cz-portal-hero">
-              {/* COLUMNA IZQUIERDA: TITULO, FILTROS Y TABLA DE PROMOS */}
+              {/* COLUMNA IZQUIERDA: NOTICIAS Y ODDS CALCULATOR */}
               <div className="cz-portal-hero__left">
                 <div className="cz-kicker-badge">
                   <span className="cz-kicker-badge__line" />
-                  <span>PROMOCIONES Y BONOS</span>
+                  <span>CHUZONICPLAY • PORTAL DEPORTIVO & PÓKER</span>
                 </div>
 
                 <h1 className="cz-portal-hero__title">
-                  Las mejores promociones <br />
-                  <span className="cz-portal-hero__title-red">de póker y casino online</span>
+                  Noticias, Probabilidades y <br />
+                  <span className="cz-portal-hero__title-red">Estrategia de Póker</span>
                 </h1>
 
                 <p className="cz-portal-hero__desc">
-                  Compara bonos, beneficios y promociones exclusivas de las principales casas de póker y casino. Encuentra la mejor oferta y empieza a jugar con ventaja.
+                  Tu centro especializado en información deportiva en tiempo real, cobertura completa del circuito internacional de póker y la calculadora de probabilidades más precisa para Texas Hold&apos;em.
                 </p>
 
-                {/* TABS DE FILTRADO */}
+                {/* TABS DE ENFOQUE: NOTICIAS PÓKER, ODDS CALCULATOR, NOTICIAS DEPORTIVAS */}
                 <div className="cz-promo-tabs" role="tablist">
                   <button
                     type="button"
@@ -367,87 +278,153 @@ export default function HomePage() {
                     onClick={() => setActiveTab('poker')}
                   >
                     <span className="cz-tab-icon">🂡</span>
-                    Póker
+                    Noticias de Póker
                   </button>
+
                   <button
                     type="button"
-                    className={`cz-promo-tab ${activeTab === 'casino' ? 'is-active' : ''}`}
-                    onClick={() => setActiveTab('casino')}
+                    className={`cz-promo-tab ${activeTab === 'odds' ? 'is-active' : ''}`}
+                    onClick={() => setActiveTab('odds')}
                   >
-                    <span className="cz-tab-icon">🎰</span>
-                    Casino
+                    <span className="cz-tab-icon">🧮</span>
+                    Odds Calculator
                   </button>
+
                   <button
                     type="button"
-                    className={`cz-promo-tab ${activeTab === 'apuestas' ? 'is-active' : ''}`}
-                    onClick={() => setActiveTab('apuestas')}
+                    className={`cz-promo-tab ${activeTab === 'sports' ? 'is-active' : ''}`}
+                    onClick={() => setActiveTab('sports')}
                   >
                     <span className="cz-tab-icon">⚽</span>
-                    Apuestas
-                  </button>
-                  <button
-                    type="button"
-                    className={`cz-promo-tab ${activeTab === 'sin-deposito' ? 'is-active' : ''}`}
-                    onClick={() => setActiveTab('sin-deposito')}
-                  >
-                    <span className="cz-tab-icon">🎁</span>
-                    Bonos sin depósito
-                  </button>
-                  <button
-                    type="button"
-                    className={`cz-promo-tab ${activeTab === 'exclusivas' ? 'is-active' : ''}`}
-                    onClick={() => setActiveTab('exclusivas')}
-                  >
-                    <span className="cz-tab-icon">⭐</span>
-                    Exclusivas
+                    Noticias Deportivas
                   </button>
                 </div>
 
-                {/* TABLA DE SALAS / CASAS */}
-                <div className="cz-promo-list">
-                  {currentList.map((item, index) => (
-                    <div key={item.id} className="cz-promo-row">
-                      <span className="cz-promo-row__index">{index + 1}</span>
-
-                      <div className="cz-promo-row__logo-box">
-                        <img src={item.logo} alt={item.name} className="cz-promo-row__logo" />
-                      </div>
-
-                      <div className="cz-promo-row__details">
-                        <div className="cz-promo-row__header">
-                          <span className="cz-promo-row__name">{item.name}</span>
-                          {item.badge && (
-                            <span className="cz-promo-badge">{item.badge}</span>
-                          )}
+                {/* CONTENIDO DEL TAB ACTIVO */}
+                {activeTab === 'poker' && (
+                  <div className="cz-news-list">
+                    {POKER_NEWS_ITEMS.map((item) => (
+                      <Link key={item.id} href={item.url} className="cz-news-card">
+                        <div className="cz-news-card__top">
+                          <span className={`cz-news-badge cz-news-badge--${item.categoryColor}`}>
+                            {item.category}
+                          </span>
+                          <span className="cz-news-card__date">{item.date}</span>
                         </div>
-                        <div className="cz-promo-row__bonus">
-                          <span className="cz-gift-icon">🎁</span>
-                          <strong>{item.bonus}</strong>
+                        <h3 className="cz-news-card__title">{item.title}</h3>
+                        <p className="cz-news-card__excerpt">{item.excerpt}</p>
+                        <div className="cz-news-card__bottom">
+                          <span className="cz-news-card__author">Por {item.author}</span>
+                          <span className="cz-news-card__cta">Leer análisis →</span>
                         </div>
-                        <p className="cz-promo-row__subbonus">{item.subBonus}</p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {activeTab === 'odds' && (
+                  <div className="cz-odds-hero-block">
+                    <div className="cz-odds-hero-header">
+                      <h2 className="cz-odds-hero-title">
+                        <span>🧮</span> Calculadora de Probabilidades Texas Hold&apos;em
+                      </h2>
+                      <p className="cz-odds-hero-desc">
+                        Simula millones de manos en milisegundos. Calcula el porcentaje exacto de victoria (Win), empate (Tie) y outs en Flop, Turn y River.
+                      </p>
+                    </div>
+
+                    <div className="cz-odds-preview-table">
+                      <div className="cz-odds-matchup">
+                        <div className="cz-odds-player-box">
+                          <div className="cz-odds-player-header">
+                            <span>Jugador 1</span>
+                            <span className="cz-odds-player-pct">58.2%</span>
+                          </div>
+                          <div className="cz-odds-cards-row">
+                            <div className="cz-mini-card cz-mini-card--spade">
+                              <span>A</span>
+                              <span>♠</span>
+                            </div>
+                            <div className="cz-mini-card cz-mini-card--spade">
+                              <span>K</span>
+                              <span>♠</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="cz-odds-vs-badge">VS</div>
+
+                        <div className="cz-odds-player-box">
+                          <div className="cz-odds-player-header">
+                            <span>Jugador 2</span>
+                            <span className="cz-odds-player-pct">40.5%</span>
+                          </div>
+                          <div className="cz-odds-cards-row">
+                            <div className="cz-mini-card cz-mini-card--heart">
+                              <span>Q</span>
+                              <span>♥</span>
+                            </div>
+                            <div className="cz-mini-card cz-mini-card--diamond">
+                              <span>Q</span>
+                              <span>♦</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="cz-promo-row__rating">
-                        <span className="cz-star-icon">★</span>
-                        <span className="cz-rating-num">{item.rating}</span>
-                      </div>
-
-                      <div className="cz-promo-row__actions">
-                        <Link href={item.reviewUrl} className="cz-btn-review">Review</Link>
-                        <a href={item.siteUrl} target="_blank" rel="noopener noreferrer" className="cz-btn-visit">
-                          Visitar sitio <span className="cz-arrow">→</span>
-                        </a>
+                      <div className="cz-odds-community-row">
+                        <span className="cz-odds-community-label">Mesa (Flop):</span>
+                        <div className="cz-mini-card cz-mini-card--spade">
+                          <span>J</span>
+                          <span>♠</span>
+                        </div>
+                        <div className="cz-mini-card cz-mini-card--spade">
+                          <span>10</span>
+                          <span>♠</span>
+                        </div>
+                        <div className="cz-mini-card cz-mini-card--diamond">
+                          <span>2</span>
+                          <span>♦</span>
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+
+                    <div className="cz-odds-hero-actions">
+                      <Link href="/odds-calculator" className="cz-odds-hero-btn">
+                        <span>Abrir Mesa Interactiva & Odds Calculator Completa</span>
+                        <span>→</span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'sports' && (
+                  <div className="cz-news-list">
+                    {SPORTS_NEWS_ITEMS.map((item) => (
+                      <Link key={item.id} href={item.url} className="cz-news-card">
+                        <div className="cz-news-card__top">
+                          <span className={`cz-news-badge cz-news-badge--${item.categoryColor}`}>
+                            {item.category}
+                          </span>
+                          <span className="cz-news-card__date">{item.date}</span>
+                        </div>
+                        <h3 className="cz-news-card__title">{item.title}</h3>
+                        <p className="cz-news-card__excerpt">{item.excerpt}</p>
+                        <div className="cz-news-card__bottom">
+                          <span className="cz-news-card__author">Por {item.author}</span>
+                          <span className="cz-news-card__cta">Ver previas y cuotas →</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* COLUMNA DERECHA: FICHAS 3D Y ESTO ES CHUZONICPLAY */}
+              {/* COLUMNA DERECHA: FICHAS EN PNG TRANSPARENTE FLOTANDO SIN RECUADRO Y ESTO ES CHUZONICPLAY */}
               <div className="cz-portal-hero__right">
                 <div className="cz-hero-illustration">
                   <img
-                    src="/assets/chuzonic/poker-chips-cards.jpg"
+                    src="/assets/chuzonic/poker-chips-cards.png"
                     alt="Chuzonic Poker chips and cards"
                     className="cz-hero-illustration__img"
                   />
@@ -456,10 +433,51 @@ export default function HomePage() {
                 <div className="cz-about-chuzonic">
                   <h2 className="cz-about-chuzonic__title">Esto es ChuzonicPlay</h2>
                   <p className="cz-about-chuzonic__desc">
-                    Analizamos y comparamos las mejores promociones del mundo del póker y casino online para que juegues con información real, actualizada y sin sorpresas.
+                    El portal enfocado en información de valor: noticias deportivas verificadas, actualidad del póker profesional y herramientas analíticas sin elementos sobrantes.
                   </p>
 
                   <div className="cz-features-grid">
+                    <div className="cz-feature-item">
+                      <div className="cz-feature-icon cz-feature-icon--red">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                          <path d="M2 12h20" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="cz-feature-item__title">Noticias en Tiempo Real</h3>
+                        <p className="cz-feature-item__desc">Cobertura al minuto de deportes y póker internacional.</p>
+                      </div>
+                    </div>
+
+                    <div className="cz-feature-item">
+                      <div className="cz-feature-icon cz-feature-icon--red">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                          <path d="M12 8v8" />
+                          <path d="M8 12h8" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="cz-feature-item__title">Calculadora de Odds</h3>
+                        <p className="cz-feature-item__desc">Probabilidades matemáticas exactas para Texas Hold&apos;em.</p>
+                      </div>
+                    </div>
+
+                    <div className="cz-feature-item">
+                      <div className="cz-feature-icon cz-feature-icon--red">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="cz-feature-item__title">Estrategia & Rangos</h3>
+                        <p className="cz-feature-item__desc">Guías tácticas para mejorar tu toma de decisiones.</p>
+                      </div>
+                    </div>
+
                     <div className="cz-feature-item">
                       <div className="cz-feature-icon cz-feature-icon--red">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
@@ -468,50 +486,8 @@ export default function HomePage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="cz-feature-item__title">Ofertas verificadas</h3>
-                        <p className="cz-feature-item__desc">Solo promociones reales y actualizadas.</p>
-                      </div>
-                    </div>
-
-                    <div className="cz-feature-item">
-                      <div className="cz-feature-icon cz-feature-icon--red">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <line x1="18" y1="20" x2="18" y2="10" />
-                          <line x1="12" y1="20" x2="12" y2="4" />
-                          <line x1="6" y1="20" x2="6" y2="14" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="cz-feature-item__title">Comparativas imparciales</h3>
-                        <p className="cz-feature-item__desc">Analizamos ventajas, requisitos y términos.</p>
-                      </div>
-                    </div>
-
-                    <div className="cz-feature-item">
-                      <div className="cz-feature-icon cz-feature-icon--red">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="cz-feature-item__title">Ahorra tiempo</h3>
-                        <p className="cz-feature-item__desc">Encuentra la mejor oferta en un solo lugar.</p>
-                      </div>
-                    </div>
-
-                    <div className="cz-feature-item">
-                      <div className="cz-feature-icon cz-feature-icon--red">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                          <circle cx="9" cy="7" r="4" />
-                          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="cz-feature-item__title">Comunidad real</h3>
-                        <p className="cz-feature-item__desc">Más de 1 millón de jugadores confían en ChuzonicPlay.</p>
+                        <h3 className="cz-feature-item__title">100% Gratuito y Libre</h3>
+                        <p className="cz-feature-item__desc">Sin registros obligatorios ni publicidad intrusiva.</p>
                       </div>
                     </div>
                   </div>
@@ -519,119 +495,84 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* 3 BANNERS INFERIORES */}
+            {/* 3 BANNERS INFERIORES: ACCESOS DIRECTOS */}
             <div className="cz-portal-banners">
               <Link href="/odds-calculator" className="cz-portal-banner-card cz-portal-banner-card--poker">
                 <div className="cz-portal-banner-card__content">
-                  <span className="cz-banner-tag cz-banner-tag--red">● PÓKER</span>
-                  <h3 className="cz-portal-banner-card__title">Torneos exclusivos y premios increíbles</h3>
-                  <p className="cz-portal-banner-card__desc">Juega en las mejores salas de póker del mundo.</p>
+                  <span className="cz-banner-tag cz-banner-tag--red">● HERRAMIENTA PRO</span>
+                  <h3 className="cz-portal-banner-card__title">Odds Calculator en Vivo</h3>
+                  <p className="cz-portal-banner-card__desc">Calcula tus probabilidades de ganar o empatar en tiempo real con la mesa interactiva.</p>
                 </div>
                 <div className="cz-portal-banner-card__action">
                   <span className="cz-banner-circle-btn cz-banner-circle-btn--red">→</span>
                 </div>
               </Link>
 
-              <div className="cz-portal-banner-card cz-portal-banner-card--casino">
+              <a href="#noticias-poker" className="cz-portal-banner-card cz-portal-banner-card--casino">
                 <div className="cz-portal-banner-card__content">
-                  <span className="cz-banner-tag cz-banner-tag--blue">CASINO</span>
-                  <h3 className="cz-portal-banner-card__title">Bonos de bienvenida de hasta $2,000</h3>
-                  <p className="cz-portal-banner-card__desc">Descubre los mejores bonos en slots, ruleta y blackjack.</p>
+                  <span className="cz-banner-tag cz-banner-tag--blue">PÓKER MUNDIAL</span>
+                  <h3 className="cz-portal-banner-card__title">Noticias y Torneos de Póker</h3>
+                  <p className="cz-portal-banner-card__desc">WSOP, Triton Series, EPT y las jugadas más destacadas de las mesas finales.</p>
                 </div>
                 <div className="cz-portal-banner-card__action">
                   <span className="cz-banner-circle-btn cz-banner-circle-btn--blue">→</span>
                 </div>
-              </div>
+              </a>
 
-              <div className="cz-portal-banner-card cz-portal-banner-card--sports">
+              <Link href="/noticias" className="cz-portal-banner-card cz-portal-banner-card--sports">
                 <div className="cz-portal-banner-card__content">
-                  <span className="cz-banner-tag cz-banner-tag--red">● APUESTAS DEPORTIVAS</span>
-                  <h3 className="cz-portal-banner-card__title">Promociones en tus depósitos y apuestas</h3>
-                  <p className="cz-portal-banner-card__desc">Aprovecha bonos exclusivos en deportes.</p>
+                  <span className="cz-banner-tag cz-banner-tag--red">● NOTICIAS DEPORTIVAS</span>
+                  <h3 className="cz-portal-banner-card__title">Fútbol, Cuotas y Marcadores</h3>
+                  <p className="cz-portal-banner-card__desc">Previas estadísticas, cuotas de valor y análisis para los partidos de la semana.</p>
                 </div>
                 <div className="cz-portal-banner-card__action">
                   <span className="cz-banner-circle-btn cz-banner-circle-btn--red">→</span>
                 </div>
-              </div>
+              </Link>
             </div>
           </section>
 
-          {/* STREAM DE CONTENIDO COMPLETO QUE CONTINÚA EN EL SCROLL */}
+          {/* STREAM DE CONTENIDO CONTINUO (ENFOCADO EN NOTICIAS, PÓKER Y HERRAMIENTAS) */}
           <section className="cz-portal-content-stream">
             <div className="cz-stream-container">
-              {/* VIP CLUB BANNER */}
-              <div className="cz-stream-block">
-                <VipBannerSection />
-              </div>
-
               {/* NOTICIAS CALIENTES */}
-              <div className="cz-stream-block">
+              <div id="noticias-poker" className="cz-stream-block">
                 <HotNewsSection />
               </div>
 
-              {/* ÚLTIMOS MATERIALES Y RANKING DE JUGADORES */}
+              {/* ÚLTIMOS MATERIALES Y ARTÍCULOS */}
               <div className="cz-stream-block">
                 <LatestMaterialsSection />
               </div>
 
-              {/* INSTAGRAM FEED INTERACTIVO */}
-              <div className="cz-stream-block">
-                <InstagramSection />
-              </div>
-
-              {/* EDUCACIÓN DE PÓKER Y GUÍAS */}
-              <div className="cz-stream-block">
+              {/* EDUCACIÓN DE PÓKER Y GUÍAS TÁCTICAS */}
+              <div id="educacion-poker" className="cz-stream-block">
                 <PokerEducationSection />
               </div>
 
               {/* HERRAMIENTAS Y CALCULADORAS */}
-              <div className="cz-stream-block">
+              <div id="herramientas" className="cz-stream-block">
                 <QuickToolsBannersSection />
               </div>
 
               {/* QUIZ INTERACTIVO */}
-              <div className="cz-stream-block">
+              <div id="quiz-poker" className="cz-stream-block">
                 <QuizSection />
-              </div>
-
-              {/* SOPORTE */}
-              <div className="cz-stream-block">
-                <SupportBannerSection />
-              </div>
-
-              {/* JUEGOS DE CASINO */}
-              <div className="cz-stream-block">
-                <CasinoGameTypesSection />
-              </div>
-
-              {/* TRAGAMONEDAS POPULARES */}
-              <div className="cz-stream-block">
-                <PopularSlotsSection />
-              </div>
-
-              {/* GUÍAS DE CASINO */}
-              <div className="cz-stream-block">
-                <CasinoEducationSection />
-              </div>
-
-              {/* YOUTUBE SHORTS */}
-              <div className="cz-stream-block">
-                <YouTubeShortsSection />
-              </div>
-
-              {/* ACERCA DE CHUZONIC */}
-              <div className="cz-stream-block">
-                <AboutSection />
-              </div>
-
-              {/* NEWSLETTER */}
-              <div className="cz-stream-block">
-                <NewsletterSection />
               </div>
 
               {/* SOFTWARE PROFESIONAL */}
               <div className="cz-stream-block">
                 <PokerSoftwareSection />
+              </div>
+
+              {/* VIDEOS Y ANÁLISIS */}
+              <div className="cz-stream-block">
+                <YouTubeShortsSection />
+              </div>
+
+              {/* NEWSLETTER */}
+              <div className="cz-stream-block">
+                <NewsletterSection />
               </div>
             </div>
 
