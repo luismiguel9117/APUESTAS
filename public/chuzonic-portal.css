@@ -626,88 +626,52 @@ body {
   font-size: 13px;
 }
 
-/* Hero Stage Banner */
-.cz-ref-hero {
+/* Hero Titular Pantalla Completa — Imagen Grande de Tipo Titular */
+.cz-ref-hero-titular {
   position: relative;
-  height: 310px;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 32px 36px;
-  background: #050813;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cz-ref-hero__bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
-  height: 100%;
-  background: url('/assets/chuzonic/ref-crops/hero-stage.jpg') right center / cover no-repeat;
-  z-index: 1;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+  background: #060913;
+  margin-bottom: 16px;
+  display: block;
+  text-decoration: none;
 }
 
-.cz-ref-hero__overlay {
+.cz-ref-hero-titular__img {
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  max-height: 600px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cz-ref-hero-titular:hover .cz-ref-hero-titular__img {
+  transform: scale(1.015);
+}
+
+.cz-ref-hero-titular__overlay-links {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #05070e 0%, #05070e 48%, rgba(5, 7, 14, 0.9) 62%, rgba(5, 7, 14, 0.2) 82%, transparent 100%);
-  z-index: 2;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 40px;
+  pointer-events: none;
 }
 
-.cz-ref-hero__content {
-  position: relative;
-  z-index: 3;
-  max-width: 530px;
-}
-
-.cz-ref-tag-red {
-  display: inline-block;
-  background: #e60026;
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.cz-ref-hero__title {
-  font-size: 28px;
-  font-weight: 900;
-  line-height: 1.18;
-  color: #ffffff;
-  margin: 0 0 10px;
-  letter-spacing: -0.4px;
-}
-
-.cz-ref-hero__title-red {
-  color: #e60026;
-}
-
-.cz-ref-hero__desc {
-  font-size: 13px;
-  color: #929db2;
-  line-height: 1.48;
-  margin: 0 0 18px;
-  max-width: 440px;
-}
-
-.cz-ref-hero__actions {
+.cz-ref-hero-hotspots {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
+  pointer-events: auto;
 }
-
-.cz-ref-btn-red {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   background: #e60026;
   color: #ffffff;
   padding: 9px 20px;

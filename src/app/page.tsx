@@ -113,75 +113,56 @@ export default function HomePage() {
           </div>
         </header>
 
-        {/* HERO STAGE BANNER — LAUTARO / CHAMPIONS LEAGUE */}
-        <section className="cz-ref-hero">
-          <div className="cz-ref-hero__bg" />
-          <div className="cz-ref-hero__overlay" />
-
-          <div className="cz-ref-hero__content">
-            <span className="cz-ref-tag-red">CHAMPIONS LEAGUE</span>
-            <h1 className="cz-ref-hero__title">
-              Lautaro Martínez lidera al Inter en una noche clave ante el <span className="cz-ref-hero__title-red">Arsenal</span>
-            </h1>
-            <p className="cz-ref-hero__desc">
-              Análisis, claves del partido, cuotas y todo lo que debes saber del duelo más esperado de los cuartos de final.
-            </p>
-
-            <div className="cz-ref-hero__actions">
-              <Link href="/noticias" className="cz-ref-btn-red">
-                <span>Leer análisis</span>
-                <span>→</span>
-              </Link>
-
-              <div className="cz-ref-pagination">
-                <span className="cz-ref-page-dash" />
-                <span className="cz-ref-page-dot" />
-                <span className="cz-ref-page-dot" />
-                <span className="cz-ref-page-dot" />
-              </div>
-            </div>
-          </div>
+        {/* HERO STAGE TITULAR GRANDE EN TODA LA PANTALLA */}
+        <section className="cz-ref-hero-titular">
+          <Link href="/noticias" style={{ display: 'block', textDecoration: 'none' }}>
+            <img
+              src="/assets/chuzonic/news-uploads/hero-lautaro-titular.png"
+              alt="Arsenal y Atlético, tras Lautaro Martínez"
+              className="cz-ref-hero-titular__img"
+            />
+          </Link>
         </section>
 
-        {/* TICKER HORIZONTAL DE 5 MINI TARJETAS */}
+        {/* TICKER HORIZONTAL DE 5 MINI TARJETAS CON FOTOS DE ALTA CALIDAD */}
         <section className="cz-ref-ticker">
           <Link href="/noticias" className="cz-ref-ticker-card">
-            <img src="/assets/chuzonic/ref-crops/thumb-lautaro.jpg" alt="Lautaro" className="cz-ref-ticker-thumb" />
+            <img src="/assets/chuzonic/news-uploads/action-boca-mineiro.jpg" alt="Boca vs Mineiro" className="cz-ref-ticker-thumb" />
             <div className="cz-ref-ticker-content">
-              <span className="cz-ref-ticker-tag">CHAMPIONS LEAGUE</span>
-              <span className="cz-ref-ticker-title">Lautaro Martínez lidera al Inter ante al Arsenal</span>
+              <span className="cz-ref-ticker-tag">COPA LIBERTADORES</span>
+              <span className="cz-ref-ticker-title">Boca vs Mineiro: Choque de titanes en La Bombonera</span>
             </div>
           </Link>
 
           <Link href="/noticias" className="cz-ref-ticker-card">
-            <img src="/assets/chuzonic/ref-crops/thumb-madrid.jpg" alt="Real Madrid" className="cz-ref-ticker-thumb" />
+            <img src="/assets/chuzonic/news-uploads/action-palmeiras-estudiantes.jpg" alt="Palmeiras vs Estudiantes" className="cz-ref-ticker-thumb" />
             <div className="cz-ref-ticker-content">
-              <span className="cz-ref-ticker-tag">LA LIGA</span>
-              <span className="cz-ref-ticker-title">Real Madrid busca asegurar el liderato</span>
+              <span className="cz-ref-ticker-tag">CONMEBOL</span>
+              <span className="cz-ref-ticker-title">Palmeiras ruge ante Estudiantes en un final épico</span>
             </div>
           </Link>
 
           <Link href="/noticias" className="cz-ref-ticker-card">
-            <img src="/assets/chuzonic/ref-crops/thumb-haaland.jpg" alt="City" className="cz-ref-ticker-thumb" />
+            <img src="/assets/chuzonic/news-uploads/action-arquero-festejo.jpg" alt="Finalísima" className="cz-ref-ticker-thumb" />
             <div className="cz-ref-ticker-content">
-              <span className="cz-ref-ticker-tag">PREMIER LEAGUE</span>
-              <span className="cz-ref-ticker-title">El City quiere volver a la cima</span>
+              <span className="cz-ref-ticker-tag">FINALÍSIMA</span>
+              <span className="cz-ref-ticker-title">Héroe bajo los tres palos: la atajada del título</span>
             </div>
           </Link>
 
           <Link href="/noticias" className="cz-ref-ticker-card">
-            <img src="/assets/chuzonic/ref-crops/thumb-peru.jpg" alt="Perú" className="cz-ref-ticker-thumb" />
+            <img src="/assets/chuzonic/news-uploads/action-argentina-marruecos.jpg" alt="Argentina vs Marruecos" className="cz-ref-ticker-thumb" />
             <div className="cz-ref-ticker-content">
               <span className="cz-ref-ticker-tag">SELECCIONES</span>
-              <span className="cz-ref-ticker-title">Perú se prepara para la Copa América</span>
+              <span className="cz-ref-ticker-title">Argentina brilla ante Marruecos con clase y dinámica</span>
             </div>
           </Link>
 
           <Link href="/noticias" className="cz-ref-ticker-card">
-            <img src="/assets/chuzonic/ref-crops/thumb-barca.jpg" alt="Barcelona" className="cz-ref-ticker-thumb" />
+            <img src="/assets/chuzonic/ref-crops/news-mbappe.jpg" alt="Mbappé" className="cz-ref-ticker-thumb" />
             <div className="cz-ref-ticker-content">
               <span className="cz-ref-ticker-tag">LA LIGA</span>
-              <span className="cz-ref-ticker-title">Barcelona recupera terreno en la tabla</span>
+              <span className="cz-ref-ticker-title">Mbappé y el Real Madrid buscan consolidar el liderato</span>
             </div>
           </Link>
 
@@ -228,28 +209,28 @@ export default function HomePage() {
               {/* STACK DE 4 MINI NOTICIAS */}
               <div className="cz-ref-mini-stack">
                 <Link href="/noticias" className="cz-ref-mini-row">
-                  <img src="/assets/chuzonic/ref-crops/news-inter-arsenal.jpg" alt="" className="cz-ref-mini-thumb" />
+                  <img src="/assets/chuzonic/news-uploads/action-boca-mineiro.jpg" alt="" className="cz-ref-mini-thumb" />
                   <div className="cz-ref-mini-info">
-                    <span className="cz-ref-mini-tag">CHAMPIONS LEAGUE</span>
-                    <span className="cz-ref-mini-title">Análisis previo: Inter vs Arsenal, un duelo de alto voltaje</span>
+                    <span className="cz-ref-mini-tag">COPA LIBERTADORES</span>
+                    <span className="cz-ref-mini-title">Boca vs Mineiro: Análisis táctico y cuotas</span>
                     <span className="cz-ref-mini-time">🕒 Hace 4 horas</span>
                   </div>
                 </Link>
 
                 <Link href="/noticias" className="cz-ref-mini-row">
-                  <img src="/assets/chuzonic/ref-crops/news-peru.jpg" alt="" className="cz-ref-mini-thumb" />
+                  <img src="/assets/chuzonic/news-uploads/action-argentina-marruecos.jpg" alt="" className="cz-ref-mini-thumb" />
                   <div className="cz-ref-mini-info">
                     <span className="cz-ref-mini-tag">SELECCIONES</span>
-                    <span className="cz-ref-mini-title">Perú ajusta su convocatoria para la Copa América</span>
+                    <span className="cz-ref-mini-title">Argentina se prepara para la fase eliminatoria</span>
                     <span className="cz-ref-mini-time">🕒 Hace 6 horas</span>
                   </div>
                 </Link>
 
                 <Link href="/noticias" className="cz-ref-mini-row">
-                  <img src="/assets/chuzonic/ref-crops/news-haaland.jpg" alt="" className="cz-ref-mini-thumb" />
+                  <img src="/assets/chuzonic/news-uploads/action-palmeiras-estudiantes.jpg" alt="" className="cz-ref-mini-thumb" />
                   <div className="cz-ref-mini-info">
-                    <span className="cz-ref-mini-tag">PREMIER LEAGUE</span>
-                    <span className="cz-ref-mini-title">Haaland vuelve a marcar y el City no se detiene</span>
+                    <span className="cz-ref-mini-tag">CONMEBOL</span>
+                    <span className="cz-ref-mini-title">Estudiantes no cede terreno en Brasil</span>
                     <span className="cz-ref-mini-time">🕒 Hace 8 horas</span>
                   </div>
                 </Link>
