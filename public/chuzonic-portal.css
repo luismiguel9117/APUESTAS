@@ -561,9 +561,18 @@ body {
   width: 100%;
 }
 
-/* Logo ChuzonicPlay */
+/* Header superior con Logo ChuzonicPlay y Buscador */
+.cz-ref-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 20px;
+}
+
 .cz-ref-brand {
-  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
 }
 
 .cz-ref-logo {
@@ -578,6 +587,43 @@ body {
 
 .cz-ref-logo__red {
   color: #e60026;
+}
+
+.cz-ref-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(14, 18, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  padding: 8px 18px;
+  width: 320px;
+  max-width: 100%;
+  color: #94a3b8;
+  transition: all 0.25s ease;
+}
+
+.cz-ref-search:hover,
+.cz-ref-search:focus-within {
+  background: rgba(18, 24, 40, 0.95);
+  border-color: rgba(230, 0, 38, 0.45);
+  box-shadow: 0 0 16px rgba(230, 0, 38, 0.15);
+  color: #ffffff;
+}
+
+.cz-ref-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 13px;
+  width: 100%;
+  font-family: inherit;
+}
+
+.cz-ref-search input::placeholder {
+  color: #64748b;
+  font-size: 13px;
 }
 
 /* Hero Stage Banner */
@@ -608,7 +654,7 @@ body {
 .cz-ref-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #05070e 0%, rgba(5, 7, 14, 0.96) 38%, rgba(5, 7, 14, 0.7) 58%, rgba(5, 7, 14, 0.15) 80%, transparent 100%);
+  background: linear-gradient(90deg, #05070e 0%, #05070e 48%, rgba(5, 7, 14, 0.9) 62%, rgba(5, 7, 14, 0.2) 82%, transparent 100%);
   z-index: 2;
 }
 
@@ -975,14 +1021,14 @@ body {
 .cz-ref-wsop-bg {
   position: absolute;
   inset: 0;
-  background: url('/assets/chuzonic/ref-crops/poker-wsop.jpg') center / cover no-repeat;
+  background: url('/assets/chuzonic/ref-crops/poker-wsop-art.jpg') right center / cover no-repeat;
   z-index: 1;
 }
 
 .cz-ref-wsop-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(7, 10, 18, 0.94) 0%, rgba(7, 10, 18, 0.75) 50%, rgba(7, 10, 18, 0.3) 100%);
+  background: linear-gradient(90deg, #090d18 0%, #090d18 52%, rgba(9, 13, 24, 0.7) 75%, transparent 100%);
   z-index: 2;
 }
 
