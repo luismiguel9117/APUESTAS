@@ -1,0 +1,477 @@
+/* ==========================================================================
+   CHUZONIC PLAY — SECCIÓN NOTICIAS ESTILO STAGE DEPORTIVO
+   --------------------------------------------------------------------------
+   Diseño inspirado en la maqueta de referencia:
+   Sidebar de iconos deportivos a la izquierda, gran stage hero con
+   fotografía de jugador en primer plano, titular de impacto, porcentajes,
+   cuotas de apuestas, scoreboard de partido y accesos rápidos en la derecha,
+   más un strip inferior de noticias secundarias.
+   ========================================================================== */
+
+.cz-news-layout {
+  min-height: 100vh;
+  background-color: #05070c;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.cz-news-body {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar deportivo izquierdo */
+.cz-sports-sidebar {
+  width: 68px;
+  background: #07090f;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.cz-sports-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: transparent;
+  border: 0;
+  color: #616a82;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cz-sports-icon-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cz-sports-icon-btn.is-active {
+  color: #2b7fff;
+  background: rgba(43, 127, 255, 0.12);
+  box-shadow: 0 0 16px rgba(43, 127, 255, 0.25);
+}
+
+/* Contenedor central */
+.cz-news-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #07090f;
+  overflow: hidden;
+}
+
+/* Stage Hero Central */
+.cz-news-stage {
+  position: relative;
+  flex: 1;
+  min-height: 580px;
+  display: flex;
+  justify-content: space-between;
+  padding: 36px 48px;
+  background-color: #07090f;
+  background-image:
+    linear-gradient(90deg, #07090f 0%, rgba(7, 9, 15, 0.85) 45%, rgba(7, 9, 15, 0.2) 80%),
+    url('/assets/chuzonic/news-reference.png');
+  background-size: cover;
+  background-position: 65% center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Contenido de texto en el stage */
+.cz-news-stage__content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Indicadores circulares de probabilidad (68% vs 25%) */
+.cz-match-prob {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.cz-prob-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  border: 2px solid;
+}
+
+.cz-prob-circle--home {
+  border-color: #00d084;
+  color: #00d084;
+  background: rgba(0, 208, 132, 0.1);
+}
+
+.cz-prob-circle--away {
+  border-color: #ff9900;
+  color: #ff9900;
+  background: rgba(255, 153, 0, 0.1);
+}
+
+.cz-prob-vs {
+  font-size: 12px;
+  font-weight: 800;
+  color: #616a82;
+  letter-spacing: 1px;
+}
+
+/* Categoría y tags */
+.cz-news-stage__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  margin-bottom: 14px;
+}
+
+.cz-news-tag {
+  color: #2b7fff;
+}
+
+.cz-news-divider {
+  color: #434c62;
+}
+
+.cz-news-subtag {
+  color: #8b92a5;
+}
+
+/* Gran Título */
+.cz-news-stage__title {
+  font-size: 46px;
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: -1.2px;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  color: #ffffff;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+}
+
+.cz-news-stage__excerpt {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #a0a6b8;
+  margin: 0 0 28px;
+  max-width: 540px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Píldoras de cuotas / odds */
+.cz-news-odds {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cz-odd-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.cz-odd-pill--bwin {
+  background: #11141c;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.cz-odd-pill--bwin .cz-bookie-name {
+  color: #ffcc00;
+}
+
+.cz-odd-pill--bet365 {
+  background: #007b46;
+  border: 1px solid #009955;
+  color: #ffffff;
+}
+
+.cz-odd-pill--bet365 .cz-odd-value {
+  color: #ffff00;
+}
+
+.cz-odd-pill--mybet {
+  background: #0d47a1;
+  border: 1px solid #1976d2;
+  color: #ffffff;
+}
+
+.cz-odd-pill--mybet .cz-bookie-name {
+  color: #4fc3f7;
+}
+
+/* Sidebar derecho (Scoreboard + Quick Hubs) */
+.cz-news-stage__sidebar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 290px;
+}
+
+/* Tarjeta Scoreboard en vivo */
+.cz-match-scoreboard {
+  background: rgba(14, 18, 28, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.cz-match-scoreboard__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.cz-tournament {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8b92a5;
+}
+
+.cz-match-score {
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+.cz-match-scoreboard__teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cz-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.cz-team-crest {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #6a1b9a;
+  color: #ffd600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.cz-team-crest--lfc {
+  background: #c62828;
+  color: #ffffff;
+}
+
+.cz-team-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cz-match-minute {
+  font-size: 11px;
+  color: #727a92;
+}
+
+.cz-scoreboard-odds {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.cz-sb-odd {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 8px;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cz-sb-odd--green {
+  background: #007b46;
+  color: #ffffff;
+}
+
+.cz-sb-odd--green span {
+  color: #ffff00;
+}
+
+.cz-sb-odd--white {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Quick Hubs Grid 2x3 */
+.cz-quick-hubs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cz-hub-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(14, 18, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 8px;
+  text-decoration: none;
+  color: #8b92a5;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.cz-hub-item:hover {
+  background: rgba(43, 127, 255, 0.15);
+  border-color: #2b7fff;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.cz-hub-item.is-active {
+  background: rgba(43, 127, 255, 0.2);
+  border-color: #2b7fff;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(43, 127, 255, 0.3);
+}
+
+.cz-hub-icon {
+  font-size: 20px;
+}
+
+/* 3. Strip horizontal de noticias secundarias */
+.cz-bottom-news-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #06080d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 28px;
+  gap: 16px;
+}
+
+.cz-bottom-news-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cz-bottom-news-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cz-card-bullet {
+  font-size: 16px;
+  color: #2b7fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cz-card-category {
+  font-size: 10px;
+  font-weight: 800;
+  color: #5d6780;
+  letter-spacing: 0.8px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.cz-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .cz-news-stage {
+    flex-direction: column;
+    gap: 30px;
+    padding: 24px;
+    background-position: right center;
+  }
+
+  .cz-news-stage__title {
+    font-size: 34px;
+  }
+
+  .cz-news-stage__sidebar {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .cz-bottom-news-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cz-sports-sidebar {
+    display: none;
+  }
+
+  .cz-news-stage__title {
+    font-size: 26px;
+  }
+
+  .cz-news-stage__sidebar {
+    flex-direction: column;
+  }
+
+  .cz-bottom-news-strip {
+    grid-template-columns: 1fr;
+  }
+}

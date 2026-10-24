@@ -1,17 +1,19 @@
 /* ==========================================================================
-   CHUZONIC PLAY — PORTAL HOMEPAGE CSS
+   CHUZONIC PLAY — SISTEMA DE DISEÑO UNIFICADO & COHERENCIA VISUAL
    --------------------------------------------------------------------------
-   Estilos inspirados en el diseño ChuzonicPlay:
-   Fondo oscuro con acentos azul/rojo, sidebar lateral fijo, hero con 
-   promociones y bonos, tarjetas de salas, bloque "Esto es ChuzonicPlay" 
-   y banners inferiores.
+   Paleta oficial de ChuzonicPlay:
+   - Fondo: #06080d (negro profundo) con texturas y viñetas
+   - Paneles/Tarjetas: #0e121d / #111522 con bordes sutiles #ffffff10
+   - Acento Principal: Rojo Chuzonic #f10d1e (glow #f10d1e40)
+   - Acento Secundario: Azul Deportivo #0f80fc
+   - Tipografía: Inter, sans-serif
    ========================================================================== */
 
 :root {
-  --cz-bg-dark: #07090e;
-  --cz-bg-surface: #0c0f17;
-  --cz-bg-card: #111522;
-  --cz-bg-card-hover: #161b2b;
+  --cz-bg-dark: #06080d;
+  --cz-bg-surface: #0b0f19;
+  --cz-bg-card: #111624;
+  --cz-bg-card-hover: #161c2e;
   --cz-border: rgba(255, 255, 255, 0.08);
   --cz-border-subtle: rgba(255, 255, 255, 0.04);
   --cz-red: #f10d1e;
@@ -19,40 +21,46 @@
   --cz-red-glow: rgba(241, 13, 30, 0.45);
   --cz-blue-btn: #0f80fc;
   --cz-text-main: #ffffff;
-  --cz-text-muted: #8b92a5;
+  --cz-text-muted: #8c94a8;
   --cz-text-dim: #5c6479;
 }
 
-/* Base global con el fondo de estadio oficial y viñeta oscura */
-.cz-portal-layout {
+/* Base global */
+body {
+  background-color: var(--cz-bg-dark) !important;
+  color: var(--cz-text-main) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  overflow-x: hidden;
+}
+
+/* Layout completo que envuelve toda la página y permite que el sidebar izquierdo acompañe todo el scroll */
+.cz-portal-app {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: var(--cz-bg-dark);
   background-image:
-    linear-gradient(180deg, rgba(7, 9, 14, 0.82) 0%, rgba(7, 9, 14, 0.94) 100%),
+    linear-gradient(180deg, rgba(6, 8, 13, 0.85) 0%, rgba(6, 8, 13, 0.96) 100%),
     url('/assets/chuzonic/stadium-bg.jpg');
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  color: var(--cz-text-main);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  display: flex;
-  flex-direction: column;
 }
 
-/* ---------- 1. TOPBAR HEADER ---------- */
+/* TOPBAR HEADER FIJO */
 .cz-portal-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
-  background: rgba(9, 11, 17, 0.94);
-  backdrop-filter: blur(14px);
+  padding: 12px 28px;
+  background: rgba(8, 11, 18, 0.96);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--cz-border);
-  gap: 20px;
+  gap: 24px;
 }
 
 .cz-portal-header__left {
@@ -82,7 +90,6 @@
   border-radius: 2px;
 }
 
-/* Solo texto para el logo */
 .cz-portal-logo {
   display: inline-flex;
   align-items: center;
@@ -94,7 +101,6 @@
   font-weight: 900;
   color: #ffffff;
   letter-spacing: -0.6px;
-  display: inline-block;
   user-select: none;
 }
 
@@ -102,17 +108,10 @@
   color: var(--cz-red);
 }
 
-/* Nav superior: Inicio | Noticias | Odds Calculator */
 .cz-portal-nav {
   display: flex;
   align-items: center;
-  gap: 24px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.cz-portal-nav::-webkit-scrollbar {
-  display: none;
+  gap: 28px;
 }
 
 .cz-portal-nav__link {
@@ -146,22 +145,21 @@
   box-shadow: 0 0 12px var(--cz-red);
 }
 
-/* Right header (Search + Login/Register) */
 .cz-portal-header__right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .cz-portal-search {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--cz-border);
   border-radius: 20px;
-  padding: 7px 16px;
-  width: 260px;
+  padding: 8px 18px;
+  width: 270px;
   color: var(--cz-text-muted);
 }
 
@@ -179,7 +177,7 @@
 }
 
 .cz-portal-btn {
-  padding: 8px 18px;
+  padding: 8px 20px;
   font-size: 13px;
   font-weight: 700;
   border-radius: 8px;
@@ -210,28 +208,43 @@
   transform: translateY(-1px);
 }
 
-/* ---------- 2. BODY CON SIDEBAR + CONTENIDO ---------- */
-.cz-portal-body {
+/* ==========================================================================
+   ESTRUCTURA PRINCIPAL CON SIDEBAR PEGADIZO QUE ACOMPAÑA TODO EL SCROLL
+   ========================================================================== */
+.cz-portal-viewport {
   display: flex;
   flex: 1;
+  position: relative;
+  align-items: stretch;
 }
 
-/* Sidebar lateral */
+/* SIDEBAR: STICKY DESDE TOP 60px HASTA EL FINAL */
 .cz-portal-sidebar {
   width: 76px;
-  background: rgba(9, 11, 17, 0.9);
+  flex-shrink: 0;
+  background: rgba(8, 10, 16, 0.94);
+  backdrop-filter: blur(12px);
   border-right: 1px solid var(--cz-border);
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px 0;
-  flex-shrink: 0;
+  padding: 14px 0;
+  z-index: 50;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.cz-portal-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .cz-portal-sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
 }
 
@@ -240,7 +253,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   width: 100%;
   padding: 10px 0;
   background: transparent;
@@ -256,43 +269,48 @@
 
 .cz-sidebar-item:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .cz-sidebar-item.is-active {
   color: #ffffff;
   border-left-color: var(--cz-red);
-  background: linear-gradient(90deg, rgba(241, 13, 30, 0.12) 0%, transparent 100%);
+  background: linear-gradient(90deg, rgba(241, 13, 30, 0.14) 0%, transparent 100%);
 }
 
 .cz-sidebar-item.is-active svg {
   stroke: var(--cz-red);
 }
 
-/* Contenido Principal */
-.cz-portal-main {
+/* ÁREA CENTRAL QUE DESLIZA COMPLETA */
+.cz-portal-main-stream {
   flex: 1;
-  padding: 28px 36px 48px;
-  max-width: 1400px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SECCIÓN HERO SUPERIOR */
+.cz-portal-hero-section {
+  padding: 32px 36px 48px;
+  max-width: 1380px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* Grid del Hero */
 .cz-portal-hero {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
-  gap: 32px;
+  gap: 36px;
   align-items: start;
 }
 
-/* Columna Izquierda */
 .cz-kicker-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.8px;
   margin-bottom: 12px;
@@ -320,13 +338,12 @@
 
 .cz-portal-hero__desc {
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--cz-text-muted);
   margin: 0 0 24px;
   max-width: 620px;
 }
 
-/* Tabs de categorías de promociones */
 .cz-promo-tabs {
   display: flex;
   align-items: center;
@@ -367,11 +384,10 @@
   font-size: 15px;
 }
 
-/* Lista de salas de póker / casas */
 .cz-promo-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .cz-promo-row {
@@ -388,7 +404,7 @@
 .cz-promo-row:hover {
   background: var(--cz-bg-card);
   border-color: rgba(241, 13, 30, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .cz-promo-row__index {
@@ -531,7 +547,6 @@
   transform: translateX(2px);
 }
 
-/* Columna Derecha: Ilustración de fichas y cartas 3D + Esto es ChuzonicPlay */
 .cz-portal-hero__right {
   display: flex;
   flex-direction: column;
@@ -620,7 +635,6 @@
   margin: 0;
 }
 
-/* ---------- 3. TRES BANNERS INFERIORES ---------- */
 .cz-portal-banners {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -717,6 +731,77 @@
   box-shadow: 0 0 12px rgba(15, 128, 252, 0.4);
 }
 
+/* ==========================================================================
+   STREAM DE CONTENIDO INFERIOR CON COHERENCIA VISUAL OSCURA
+   ========================================================================== */
+.cz-portal-content-stream {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px 36px 60px;
+  background: rgba(7, 9, 14, 0.92);
+}
+
+.cz-stream-container {
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.cz-stream-block {
+  margin-bottom: 40px;
+}
+
+/* Forzar que todos los elementos importados del clon usen tema oscuro y texto blanco */
+.cz-portal-content-stream .page-main-content,
+.cz-portal-content-stream section,
+.cz-portal-content-stream .container,
+.cz-portal-content-stream article {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.cz-portal-content-stream .news-card {
+  background: #0f1320 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+}
+
+.cz-portal-content-stream .news-card:hover {
+  border-color: rgba(241, 13, 30, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+.cz-portal-content-stream .news-card__title,
+.cz-portal-content-stream h2,
+.cz-portal-content-stream h3,
+.cz-portal-content-stream .title,
+.cz-portal-content-stream .title__text {
+  color: #ffffff !important;
+}
+
+.cz-portal-content-stream .tabs {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+}
+
+.cz-portal-content-stream .tabs__tab {
+  color: #8b92a5 !important;
+}
+
+.cz-portal-content-stream .tabs__tab.tab--active {
+  background: var(--cz-red) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 12px var(--cz-red-glow) !important;
+}
+
+.cz-portal-content-stream .footer {
+  background: #05060a !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 48px 20px !important;
+}
+
 /* Responsive */
 @media (max-width: 1180px) {
   .cz-portal-hero {
@@ -741,11 +826,11 @@
     display: none;
   }
 
-  .cz-portal-main {
+  .cz-portal-hero-section {
     padding: 16px;
   }
 
-  .cz-portal-hero__title {
-    font-size: 28px;
+  .cz-portal-content-stream {
+    padding: 20px 16px;
   }
 }

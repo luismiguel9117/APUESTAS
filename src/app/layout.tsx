@@ -16,6 +16,7 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="/styles.css" />
         <link rel="stylesheet" href="/chuzonic-portal.css" />
+        <link rel="stylesheet" href="/chuzonic-news.css" />
       </head>
       <body>
         {children}
