@@ -485,6 +485,595 @@ body {
 }
 
 /* ==========================================================================
+   DISEÑO OFICIAL CHUZONICPLAY — FIDELIDAD TOTAL AL MOCKUP DE REFERENCIA
+   ========================================================================== */
+
+/* Contenedor principal con sidebar lateral persistente */
+.cz-ref-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #05070e;
+  color: #ffffff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Sidebar lateral izquierdo persistente */
+.cz-ref-sidebar {
+  width: 68px;
+  flex-shrink: 0;
+  background: #070912;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.cz-ref-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  color: #838da0;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cz-ref-nav-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cz-ref-nav-item.is-active {
+  background: #e60026;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(230, 0, 38, 0.45);
+}
+
+.cz-ref-nav-item.is-active svg {
+  color: #ffffff;
+}
+
+/* Contenido Principal */
+.cz-ref-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 26px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Logo ChuzonicPlay */
+.cz-ref-brand {
+  margin-bottom: 14px;
+}
+
+.cz-ref-logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cz-ref-logo__red {
+  color: #e60026;
+}
+
+/* Hero Stage Banner */
+.cz-ref-hero {
+  position: relative;
+  height: 310px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 36px;
+  background: #050813;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cz-ref-hero__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/chuzonic/ref-crops/hero-stage.jpg') right center / cover no-repeat;
+  z-index: 1;
+}
+
+.cz-ref-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #05070e 0%, rgba(5, 7, 14, 0.96) 38%, rgba(5, 7, 14, 0.7) 58%, rgba(5, 7, 14, 0.15) 80%, transparent 100%);
+  z-index: 2;
+}
+
+.cz-ref-hero__content {
+  position: relative;
+  z-index: 3;
+  max-width: 530px;
+}
+
+.cz-ref-tag-red {
+  display: inline-block;
+  background: #e60026;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.cz-ref-hero__title {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.18;
+  color: #ffffff;
+  margin: 0 0 10px;
+  letter-spacing: -0.4px;
+}
+
+.cz-ref-hero__title-red {
+  color: #e60026;
+}
+
+.cz-ref-hero__desc {
+  font-size: 13px;
+  color: #929db2;
+  line-height: 1.48;
+  margin: 0 0 18px;
+  max-width: 440px;
+}
+
+.cz-ref-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.cz-ref-btn-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e60026;
+  color: #ffffff;
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(230, 0, 38, 0.4);
+  transition: all 0.2s ease;
+}
+
+.cz-ref-btn-red:hover {
+  background: #ff1238;
+  transform: translateX(2px);
+}
+
+.cz-ref-pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cz-ref-page-dash {
+  width: 22px;
+  height: 3px;
+  background: #e60026;
+  border-radius: 2px;
+}
+
+.cz-ref-page-dot {
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+}
+
+/* Ticker horizontal de 5 mini tarjetas debajo del Hero */
+.cz-ref-ticker {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.cz-ref-ticker-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(11, 15, 26, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 6px 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  min-height: 50px;
+}
+
+.cz-ref-ticker-card:hover {
+  background: rgba(18, 24, 40, 0.95);
+  border-color: rgba(230, 0, 38, 0.35);
+  transform: translateY(-1px);
+}
+
+.cz-ref-ticker-thumb {
+  width: 50px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cz-ref-ticker-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cz-ref-ticker-tag {
+  font-size: 8px;
+  font-weight: 900;
+  color: #e60026;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.cz-ref-ticker-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cz-ref-ticker-arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cz-ref-ticker-arrow:hover {
+  background: #e60026;
+  border-color: #e60026;
+}
+
+/* Grilla de 2 Columnas de Noticias */
+.cz-ref-news-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.cz-ref-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cz-ref-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.cz-ref-indicator-bar {
+  width: 3px;
+  height: 14px;
+  background: #e60026;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.cz-ref-see-all {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8c97aa;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.cz-ref-see-all:hover {
+  color: #ffffff;
+}
+
+/* Bloque izquierdo: Últimas noticias */
+.cz-ref-latest-block {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+}
+
+.cz-ref-mbappe-card {
+  background: #090d18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+.cz-ref-mbappe-card:hover {
+  border-color: rgba(230, 0, 38, 0.4);
+  transform: translateY(-2px);
+}
+
+.cz-ref-mbappe-img {
+  width: 100%;
+  height: 155px;
+  object-fit: cover;
+  display: block;
+}
+
+.cz-ref-mbappe-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cz-ref-mbappe-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.35;
+  margin: 6px 0 6px;
+}
+
+.cz-ref-mbappe-desc {
+  font-size: 11.5px;
+  color: #8c97aa;
+  line-height: 1.45;
+  margin: 0 0 10px;
+}
+
+.cz-ref-mbappe-meta {
+  font-size: 10.5px;
+  color: #5c667a;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Columna de 4 noticias mini */
+.cz-ref-mini-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cz-ref-mini-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(11, 15, 26, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 6px 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.cz-ref-mini-row:hover {
+  background: rgba(18, 24, 40, 0.9);
+  border-color: rgba(230, 0, 38, 0.3);
+}
+
+.cz-ref-mini-thumb {
+  width: 52px;
+  height: 35px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cz-ref-mini-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cz-ref-mini-tag {
+  font-size: 7.5px;
+  font-weight: 900;
+  color: #e60026;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cz-ref-mini-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cz-ref-mini-time {
+  font-size: 9.5px;
+  color: #5c667a;
+}
+
+/* Bloque derecho: Noticias de Póker */
+.cz-ref-poker-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cz-ref-wsop-banner {
+  height: 82px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: #090d18;
+}
+
+.cz-ref-wsop-bg {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/chuzonic/ref-crops/poker-wsop.jpg') center / cover no-repeat;
+  z-index: 1;
+}
+
+.cz-ref-wsop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7, 10, 18, 0.94) 0%, rgba(7, 10, 18, 0.75) 50%, rgba(7, 10, 18, 0.3) 100%);
+  z-index: 2;
+}
+
+.cz-ref-wsop-content {
+  position: relative;
+  z-index: 3;
+  max-width: 250px;
+}
+
+.cz-ref-wsop-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 4px 0 2px;
+}
+
+.cz-ref-wsop-time {
+  font-size: 9.5px;
+  color: #7d899e;
+}
+
+/* Banner Inferior: Simulador de Odds */
+.cz-ref-odds-banner {
+  margin-top: 24px;
+  background: linear-gradient(135deg, #090c17 0%, #111626 50%, #0d1120 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cz-ref-odds-banner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #e60026;
+}
+
+.cz-ref-odds-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cz-ref-odds-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cz-ref-odds-desc {
+  font-size: 12px;
+  color: #8c97aa;
+  margin: 0;
+}
+
+.cz-ref-odds-art {
+  height: 52px;
+  object-fit: contain;
+  display: block;
+}
+
+.cz-ref-odds-btn {
+  background: #e60026;
+  color: #ffffff;
+  padding: 9px 22px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(230, 0, 38, 0.4);
+  transition: all 0.2s ease;
+}
+
+.cz-ref-odds-btn:hover {
+  background: #ff1238;
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
    ESTRUCTURA PRINCIPAL SIN BARRA SUPERIOR
    ========================================================================== */
 .cz-portal-viewport {
