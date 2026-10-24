@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'PokerListings - Poker News, Guides, Strategies & Reviews',
+  title: 'Chuzonic Play - Apuestas, Promociones, Noticias y Herramientas',
   description:
-    'Well over one million online poker players have taken advantage of PokerListings’ exclusive sign-up deals and freerolls.',
+    'Compara bonos, beneficios y promociones exclusivas de póker, casino y apuestas deportivas en ChuzonicPlay.',
 };
 
 export default function RootLayout({
@@ -12,11 +12,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-US">
+    <html lang="es">
       <head>
         <link rel="stylesheet" href="/styles.css" />
+        <link rel="stylesheet" href="/chuzonic-portal.css" />
       </head>
-      <body className="home page-template-default page page-id-22286">
+      <body>
         {children}
       </body>
     </html>

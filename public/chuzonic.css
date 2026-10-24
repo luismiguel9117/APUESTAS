@@ -1,0 +1,614 @@
+/* ==========================================================================
+   TEMA CHUZONIC PLAY — Odds Calculator
+   --------------------------------------------------------------------------
+   Rediseño completo del clon de PokerListings con la identidad visual de
+   Chuzonic Play: fondo negro/rojo con líneas de neón, mesa ovalada verde
+   con marco de neón rojo, paneles de jugadores sobre el tablero y selector
+   de cartas inferior en PC.
+   ========================================================================== */
+
+:root {
+  --cz-red: #f10d1e;
+  --cz-red-bright: #ff2b3d;
+  --cz-red-glow: rgba(241, 13, 30, 0.55);
+  --cz-red-soft: rgba(241, 13, 30, 0.16);
+  --cz-felt: #006b2b;
+  --cz-felt-dark: #004d20;
+  --cz-bg: #05060b;
+  --cz-panel: #07080e;
+  --cz-panel-2: #0c0e16;
+  --cz-line: rgba(255, 255, 255, 0.09);
+  --cz-text: #f9f7fa;
+  --cz-text-dim: #9aa0ac;
+  --cz-silver: #c9ced8;
+}
+
+/* ---------- Base ---------- */
+body.solo-calculadora {
+  background-color: var(--cz-bg) !important;
+  background-image:
+    linear-gradient(rgba(5, 6, 11, 0.4), rgba(5, 6, 11, 0.65)),
+    url('/assets/chuzonic/bg-chuzonic.webp') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  color: var(--cz-text) !important;
+  min-height: 100vh;
+}
+
+body.solo-calculadora .site,
+body.solo-calculadora .site-main,
+body.solo-calculadora .container,
+body.solo-calculadora .calculator-content {
+  background: transparent !important;
+}
+
+body.solo-calculadora .container {
+  max-width: 1240px;
+}
+
+/* ---------- Ocultar header y footer originales del clon ---------- */
+body.solo-calculadora .header,
+body.solo-calculadora .footer {
+  display: none !important;
+}
+
+body.solo-calculadora main {
+  margin-top: 0 !important;
+}
+
+body.solo-calculadora .site-main {
+  padding-bottom: 40px !important;
+}
+
+/* ==========================================================================
+   1. ELIMINAR EL FONDO CON PUNTOS Y RECUADROS EXTRAÑOS
+   ========================================================================== */
+/* Quitar el fondo negro con patrón que oculta la imagen de fondo */
+body.solo-calculadora .calculator {
+  background: transparent !important;
+  margin-top: 20px;
+  margin-bottom: 26px;
+}
+
+body.solo-calculadora .calculator::before {
+  display: none !important;
+  background: none !important;
+}
+
+/* Quitar la rejilla de puntos que añade .calculator__controls::before */
+body.solo-calculadora .calculator__controls::before {
+  display: none !important;
+  background: none !important;
+}
+
+/* Quitar el fondo de caja cuadrada en .calculator__table-body para que
+   SOLO se vea la mesa ovalada del SVG */
+body.solo-calculadora .calculator__table-body {
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   HEADER CHUZONIC
+   ========================================================================== */
+.cz-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 20px;
+  background: linear-gradient(180deg, rgba(4, 5, 10, 0.96) 0%, rgba(4, 5, 10, 0.82) 100%);
+  border-bottom: 1px solid var(--cz-red-soft);
+  backdrop-filter: blur(10px);
+}
+
+.cz-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cz-red), transparent);
+  opacity: 0.55;
+}
+
+.cz-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.cz-logo__emblem {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--cz-red-glow));
+}
+
+.cz-logo__wordmark {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+
+/* ---------- Navegación de juegos ---------- */
+.cz-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  margin-left: auto;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+}
+
+.cz-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.cz-nav__item {
+  position: relative;
+  padding: 16px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cz-text);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.cz-nav__item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cz-nav__item.is-active {
+  color: var(--cz-red-bright);
+}
+
+.cz-nav__item.is-active::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--cz-red);
+  box-shadow: 0 0 12px var(--cz-red), 0 0 22px var(--cz-red-glow);
+}
+
+.cz-nav__item--more .cz-caret {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 12px;
+  transform: translateY(-1px);
+}
+
+/* ---------- Botones de la derecha ---------- */
+.cz-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cz-icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cz-line);
+  border-radius: 10px;
+  color: var(--cz-text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.cz-icon-btn:hover {
+  border-color: var(--cz-red);
+  box-shadow: 0 0 14px rgba(241, 13, 30, 0.35);
+  background: rgba(241, 13, 30, 0.08);
+}
+
+.cz-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Ocultar las pestañas originales */
+body.solo-calculadora .calculator__tabs {
+  display: none !important;
+}
+
+/* Desplegable Más */
+.cz-more-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  background: linear-gradient(165deg, var(--cz-panel-2) 0%, var(--cz-panel) 100%);
+  border: 1px solid rgba(241, 13, 30, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.7), 0 0 24px rgba(241, 13, 30, 0.22);
+  z-index: 300;
+}
+
+.cz-more-menu[hidden] {
+  display: none !important;
+}
+
+.cz-more-menu__item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--cz-text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cz-more-menu__item:hover {
+  background: rgba(241, 13, 30, 0.14);
+  color: #fff;
+}
+
+.cz-more-menu__item.is-active {
+  color: var(--cz-red-bright);
+  background: rgba(241, 13, 30, 0.1);
+}
+
+.cz-nav__item--more {
+  position: relative;
+}
+
+/* ==========================================================================
+   2. LA MESA OVALADA
+   ========================================================================== */
+body.solo-calculadora .calculator__table-body img {
+  filter: drop-shadow(0 0 20px rgba(241, 13, 30, 0.55))
+          drop-shadow(0 0 50px rgba(241, 13, 30, 0.25));
+}
+
+/* Etiquetas Flop / Turn / River */
+body.solo-calculadora .calculator__board-group-name {
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Slots de cartas sobre el tapete */
+body.solo-calculadora .calculator__card-slot {
+  background: rgba(0, 50, 24, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+}
+
+body.solo-calculadora .calculator__card-slot::before {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.solo-calculadora .calculator__card-slot::after {
+  filter: drop-shadow(0 0 6px rgba(120, 255, 180, 0.55));
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   3. PANELES DE JUGADORES Y BOTONES ADD PLAYER EN EL TABLERO
+   ========================================================================== */
+body.solo-calculadora .calculator__players-item {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  overflow: visible;
+}
+
+/* Tarjeta de jugador (Player 1 y Player 2) */
+body.solo-calculadora .calculator__player {
+  position: relative;
+  background: linear-gradient(165deg, rgba(12, 14, 22, 0.92) 0%, rgba(7, 8, 14, 0.95) 100%) !important;
+  border: 1px solid var(--cz-line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.65) !important;
+  padding: 16px 20px !important;
+  gap: 10px !important;
+  overflow: hidden;
+}
+
+/* Filete rojo vertical a la izquierda del panel */
+body.solo-calculadora .calculator__player::before {
+  content: '' !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--cz-red) 0%, rgba(241, 13, 30, 0.1) 90%);
+  box-shadow: 0 0 14px var(--cz-red-glow);
+  z-index: 2;
+}
+
+body.solo-calculadora .calculator__player::after {
+  background-image: none !important;
+}
+
+body.solo-calculadora .calculator__player-name {
+  color: var(--cz-text) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-bottom: 4px !important;
+  padding-bottom: 8px !important;
+  position: relative;
+  width: 100% !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  text-transform: none !important;
+}
+
+body.solo-calculadora .calculator__player-name::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cz-red), rgba(241, 13, 30, 0.05));
+}
+
+body.solo-calculadora .calculator__player-cards {
+  justify-content: center !important;
+  gap: 12px !important;
+  margin: 6px 0 !important;
+}
+
+/* Win / Tie */
+body.solo-calculadora .calculator__player-chances {
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item {
+  gap: 6px !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item-value {
+  color: var(--cz-text) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+body.solo-calculadora .calculator__player-chances-item-name {
+  color: var(--cz-text-dim) !important;
+  font-size: 13px !important;
+}
+
+/* Botones Add Player alrededor de la mesa */
+body.solo-calculadora .calculator__players .calculator__player-add {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px !important;
+  padding: 10px 20px !important;
+  border-radius: 999px !important;
+  background: rgba(14, 16, 24, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: var(--cz-text) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+}
+
+body.solo-calculadora .calculator__players .calculator__player-add:hover {
+  border-color: var(--cz-red) !important;
+  box-shadow: 0 0 18px rgba(241, 13, 30, 0.45) !important;
+  background: rgba(241, 13, 30, 0.12) !important;
+}
+
+body.solo-calculadora .calculator__players .calculator__player-add::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='11' stroke='%23F10D1E' stroke-width='2'/><path d='M12 7v10M7 12h10' stroke='%23F10D1E' stroke-width='2' stroke-linecap='round'/></svg>") !important;
+  filter: drop-shadow(0 0 5px var(--cz-red-glow));
+}
+
+/* ==========================================================================
+   4. PANEL DE CONTROL Y CARTAS (ABAJO EN PC)
+   ========================================================================== */
+/* Contenedor inferior translúcido estilo Chuzonic */
+body.solo-calculadora .calculator__controls {
+  margin-top: 32px;
+  border-radius: 20px !important;
+  padding: 24px 30px !important;
+  border: 1px solid rgba(241, 13, 30, 0.28) !important;
+  background: linear-gradient(165deg, rgba(12, 14, 22, 0.85) 0%, rgba(6, 7, 12, 0.92) 100%) !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.6), 0 0 28px rgba(241, 13, 30, 0.12) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* En desktop (min-width: 1024px), las cartas se muestran abajo integradas */
+@media (min-width: 1024px) {
+  body.solo-calculadora .calculator__modal {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    display: block !important;
+    z-index: 10 !important;
+  }
+
+  body.solo-calculadora .calculator__modal-close {
+    display: none !important;
+  }
+
+  body.solo-calculadora .calculator__modal-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body.solo-calculadora .calculator__modal-title,
+  body.solo-calculadora .calculator__modal-cards {
+    display: none !important;
+  }
+
+  body.solo-calculadora .calculator__cards {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 32px !important;
+    overflow: visible !important;
+  }
+
+  body.solo-calculadora .calculator__cards-group {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    width: auto !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card {
+    width: 48px !important;
+    max-width: 48px !important;
+    height: 34px !important;
+    aspect-ratio: auto !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4) !important;
+    cursor: pointer !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  body.solo-calculadora .calculator__cards .calculator__card:hover {
+    transform: translateY(-4px) scale(1.08) !important;
+    box-shadow: 0 6px 14px rgba(241, 13, 30, 0.4) !important;
+  }
+
+  /* Los botones de Reset Cards abajo de la parrilla de cartas */
+  body.solo-calculadora .calculator__modal-btns {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 18px !important;
+  }
+
+  body.solo-calculadora .calculator__modal-done {
+    display: none !important;
+  }
+
+  body.solo-calculadora .calculator__modal-reset.button {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: var(--cz-text) !important;
+    padding: 10px 26px !important;
+    height: auto !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  body.solo-calculadora .calculator__modal-reset.button:hover {
+    border-color: var(--cz-red) !important;
+    box-shadow: 0 0 16px rgba(241, 13, 30, 0.35) !important;
+    color: #fff !important;
+  }
+}
+
+/* ==========================================================================
+   5. MÓVIL (<= 1023px)
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .cz-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .cz-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    border-top: 1px solid var(--cz-line);
+    padding-top: 6px;
+  }
+
+  .cz-nav__item {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .cz-logo__wordmark {
+    height: 30px;
+  }
+
+  .cz-logo__emblem {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* En móvil el modal se abre como popup superpuesto */
+  body.solo-calculadora .calculator__modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(3, 4, 8, 0.94) !important;
+    backdrop-filter: blur(8px) !important;
+    z-index: 500 !important;
+    display: none !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+  }
+
+  body.solo-calculadora .calculator__modal.is-open {
+    display: block !important;
+  }
+
+  body.solo-calculadora .calculator__modal-content {
+    background: linear-gradient(165deg, var(--cz-panel-2), var(--cz-panel)) !important;
+    border: 1px solid rgba(241, 13, 30, 0.4) !important;
+    border-radius: 18px !important;
+    padding: 20px !important;
+    margin: 40px auto !important;
+    max-width: 500px !important;
+  }
+}
