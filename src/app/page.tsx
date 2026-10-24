@@ -113,18 +113,55 @@ export default function HomePage() {
           </div>
         </header>
 
-        {/* HERO STAGE TITULAR GRANDE EN TODA LA PANTALLA */}
-        <section className="cz-ref-hero-titular">
-          <Link href="/noticias" style={{ display: 'block', textDecoration: 'none' }}>
-            <img
-              src="/assets/chuzonic/news-uploads/hero-lautaro-titular.png"
-              alt="Arsenal y Atlético, tras Lautaro Martínez"
-              className="cz-ref-hero-titular__img"
-            />
-          </Link>
+        {/* HERO STAGE NATIVO CON FOTOGRAFÍA LIMPIA Y TEXTO HTML REAL */}
+        <section className="cz-ref-hero">
+          <div className="cz-ref-hero__bg" />
+          <div className="cz-ref-hero__overlay" />
+
+          <div className="cz-ref-hero__content">
+            <span className="cz-ref-tag-red">CHAMPIONS LEAGUE</span>
+
+            <h1 className="cz-ref-hero__title">
+              Lautaro Martínez lidera al Inter en una noche clave ante el <span className="cz-ref-hero__title-red">Arsenal</span>
+            </h1>
+
+            <p className="cz-ref-hero__desc">
+              Análisis, claves del partido, cuotas y todo lo que debes saber del duelo más esperado de los cuartos de final.
+            </p>
+
+            <div className="cz-ref-hero__actions">
+              <Link href="/noticias" className="cz-ref-btn-red">
+                <span>Leer análisis</span>
+                <span>→</span>
+              </Link>
+
+              <div className="cz-ref-pagination">
+                <span className="cz-ref-page-dash" />
+                <span className="cz-ref-page-dot" />
+                <span className="cz-ref-page-dot" />
+                <span className="cz-ref-page-dot" />
+              </div>
+            </div>
+
+            {/* CUOTAS DESTACADAS EN VIVO DEL PARTIDO */}
+            <div className="cz-hero-odds-row">
+              <div className="cz-hero-odds-pill">
+                <span className="cz-hero-odds-name">Arsenal</span>
+                <span className="cz-hero-odds-val">1.92</span>
+              </div>
+              <div className="cz-hero-odds-pill">
+                <span className="cz-hero-odds-name">Empate</span>
+                <span className="cz-hero-odds-val">3.40</span>
+              </div>
+              <div className="cz-hero-odds-pill">
+                <span className="cz-hero-odds-name">Atlético</span>
+                <span className="cz-hero-odds-val">4.20</span>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* TICKER HORIZONTAL DE 5 MINI TARJETAS CON FOTOS DE ALTA CALIDAD */}
+        {/* TICKER HORIZONTAL DE 5 MINI TARJETAS */}
         <section className="cz-ref-ticker">
           <Link href="/noticias" className="cz-ref-ticker-card">
             <img src="/assets/chuzonic/news-uploads/action-boca-mineiro.jpg" alt="Boca vs Mineiro" className="cz-ref-ticker-thumb" />
@@ -317,7 +354,7 @@ export default function HomePage() {
           </div>
 
           <img
-            src="/assets/chuzonic/ref-crops/odds-banner-chips.jpg"
+            src="/assets/chuzonic/poker-chips-cards.png"
             alt="Simulador de Odds"
             className="cz-ref-odds-art"
           />
